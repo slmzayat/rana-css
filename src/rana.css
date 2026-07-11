@@ -150,14 +150,18 @@
 /* 1. System Resets & Base Layout */
 html {
   background-color: var(--color-bg);
+  /* Firefox 128+ aliases this exact property to what -moz-osx-font-smoothing
+     used to provide, so that separate Mozilla prefix is redundant now; no
+     standard property replaces -webkit-font-smoothing itself for any engine. */
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   /* Two-weight system enforcement: combinations without a shipped cut
      (e.g. sans italic) render at the nearest real cut instead of being
      faux-bolded/faux-obliqued by the browser. */
   font-synthesis: none;
   /* Lock iOS Safari's landscape font inflation, which would break the
-     ch-based column math. */
+     ch-based column math. Safari has never shipped the unprefixed property
+     (still webkit-only as of Interop 2025); Firefox has no equivalent at
+     all, prefixed or not, and just ignores both declarations. Keep both. */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   /* Modern, side-effect-free equivalent of text-rendering: optimizeLegibility */
@@ -234,7 +238,8 @@ summary,
 label {
   /* Remove the double-tap-zoom delay heuristic on taps */
   touch-action: manipulation;
-  /* iOS gray tap flash replaced by our own :active / :focus-visible feedback */
+  /* iOS gray tap flash replaced by our own :active / :focus-visible feedback.
+     Non-standard with no standard equivalent in any spec; keep the prefix. */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -243,6 +248,9 @@ summary,
 label,
 input[type="checkbox"] {
   user-select: none;
+  /* WebKit's unprefixing attempt (bug 208677) shipped in April 2022 and was
+     reverted that July over compatibility issues; it remains unshipped as
+     of Interop 2025. Safari still requires this prefix -- don't drop it. */
   -webkit-user-select: none;
 }
 
@@ -402,7 +410,7 @@ p,
 li,
 blockquote {
   text-wrap: pretty;
-  -webkit-hyphens: auto;
+  /* Unprefixed since Safari 17 (2023); no engine in the current floor needs -webkit-hyphens. */
   hyphens: auto;
   hyphenate-limit-chars: 6 3 3;
 }
@@ -762,7 +770,7 @@ textarea:disabled {
   cursor: not-allowed;
 }
 
-/* 10. Task Lists (classless via :has(); legacy class fallbacks included) */
+/* 10. Task Lists (classless via :has()) */
 ul:has(> li > input[type="checkbox"]) {
   list-style-type: none;
   padding-inline-start: 0;
@@ -813,7 +821,7 @@ li input[type="checkbox"]:checked::after {
   transform: rotate(45deg) scale(1);
 }
 
-/* 11. Footnotes (GFM data attributes; legacy class fallbacks included) */
+/* 11. Footnotes (GFM data attributes) */
 a[data-footnote-ref],
 a[data-footnote-backref] {
   text-decoration: none;
@@ -886,6 +894,8 @@ summary {
   transition: color var(--duration-fast) var(--ease-out-strong);
 }
 
+/* Safari doesn't honor list-style/::marker on <summary> to remove the
+   native triangle; only this non-standard pseudo-element works there. */
 summary::-webkit-details-marker {
   display: none;
 }
