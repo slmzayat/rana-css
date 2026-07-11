@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rana test suite</title>
+    <meta name="theme-color" content="#FFFFFF"
+      media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#11191F"
+      media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="../src/rana.css">
+    <link rel="stylesheet" href="../src/rana-integrations.css">
+    <style>
+      /* ------------------------------------------------------------------
+         Zero-JS theme switcher (page-level, not part of rana.css).
+         rana.css defines every color token with light-dark(), so a scheme
+         switch is just: change color-scheme. :has() reads the radio state
+         from the root. "Auto" (default) sets nothing, leaving the framework
+         to follow prefers-color-scheme natively.
+         ------------------------------------------------------------------ */
+      :root:has(#theme-gray:checked) {
+        color-scheme: light;
+      }
+
+      :root:has(#theme-dark:checked) {
+        color-scheme: dark;
+      }
+
+      /* Sepia lives in rana.css as [data-theme="sepia"]. A zero-JS page
+         cannot set that attribute from a radio, so this shim forwards the
+         radio state to the same palette. Real sites: just set
+         <html data-theme="sepia"> and delete this. */
+      :root:has(#theme-sepia:checked) {
+        color-scheme: light;
+        --color-bg: #FFFCF0;
+        --color-heading: #100F0F;
+        --color-body: #100F0F;
+        --color-meta: #6F6E69;
+        --color-border: #E6E4D9;
+        --color-code-bg: #F2F0E5;
+        --color-link: #205EA6;
+        --color-link-hover: #1A4F8C;
+        --color-focus-ring: rgba(32, 94, 166, 0.18);
+      }
+
+      /* Back-to-top: a plain anchor to #top, fixed to the corner.
+         Native smooth scroll from rana.css does the travel. */
+      a.back-to-top {
+        position: fixed;
+        inset-block-end: max(1rem, env(safe-area-inset-bottom));
+        inset-inline-end: max(1rem, env(safe-area-inset-right));
+        inline-size: 2.75rem;
+        block-size: 2.75rem;
+        display: grid;
+        place-items: center;
+        font-family: var(--font-sans);
+        font-size: 1.25rem;
+        line-height: 1;
+        text-decoration: none;
+        color: var(--color-meta);
+        background-color: var(--color-code-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+        transition: color var(--duration-fast) var(--ease-out-strong),
+          border-color var(--duration-fast) var(--ease-out-strong),
+          transform var(--duration-press) var(--ease-out-strong);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        a.back-to-top:hover {
+          color: var(--color-link);
+          border-color: var(--color-link);
+        }
+      }
+
+      a.back-to-top:active {
+        transform: scale(0.94);
+      }
+
+      a.back-to-top:focus-visible {
+        outline: 2px solid var(--color-link);
+        outline-offset: 2px;
+      }
+
+      /* Replicate rana.css's non-color dark adjustments (filters/shadows
+         can't use light-dark()) and neutralize them when a light theme is
+         forced while the OS is dark. */
+      :root:has(#theme-dark:checked) img:not([src*=".svg"]) {
+        filter: brightness(0.85) contrast(1.1);
+      }
+
+      :root:has(#theme-gray:checked) img,
+      :root:has(#theme-sepia:checked) img {
+        filter: none;
+      }
+
+      /* Shiki tokens follow the chosen theme, overriding the OS default */
+      :root:has(#theme-gray:checked) .shiki span,
+      :root:has(#theme-sepia:checked) .shiki span {
+        color: var(--shiki-light) !important;
+      }
+
+      :root:has(#theme-dark:checked) .shiki span {
+        color: var(--shiki-dark) !important;
+      }
+
+      /* Align the page header with rana.css's reading column */
+      body>header {
+        max-inline-size: 65ch;
+        margin-inline: auto;
+        padding-block-start: clamp(2rem, 6vh, 4rem);
+        padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));
+      }
+
+      body>header+main {
+        padding-block-start: 0;
+      }
+
+      /* Keep the switcher itself tidy: radios inline with their labels */
+      fieldset {
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        padding: 0.75rem 1rem;
+      }
+
+      fieldset label {
+        margin-inline-end: 1rem;
+      }
+
+      fieldset input[type="radio"] {
+        margin-inline-end: 0.35rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="top">
+      <h1>Rana, put to work</h1>
+      <p>This page is a proving ground. It walks through everything Markdown
+        can produce: headings, paragraphs, lists, quotes, tables, code, and
+        more. Read on and see how the stylesheet treats each one. If
+        something looks wrong here, it will look wrong in a real article.
+        Read it top to bottom, or jump around; every section stands on its
+        own.</p>
+
+      <form aria-label="Appearance settings">
+        <fieldset>
+          <legend>Theme preference</legend>
+          <input type="radio" value="auto" name="theme" id="theme-auto" checked>
+          <label for="theme-auto">Auto</label>
+
+          <input type="radio" value="gray" name="theme" id="theme-gray">
+          <label for="theme-gray">Light</label>
+
+          <input type="radio" value="sepia" name="theme" id="theme-sepia">
+          <label for="theme-sepia">Sepia</label>
+
+          <input type="radio" value="dark" name="theme" id="theme-dark">
+          <label for="theme-dark">Dark</label>
+        </fieldset>
+      </form>
+    </header>
+
+    <main>
+      <article>
+        <h2>Headings</h2>
+        <p>Markdown gives you six heading levels. Use one <code>#</code> for the
+          biggest, six for the smallest. The top two keep the serif voice of
+          the body text. From level three down, headings switch to a plainer
+          typeface, and the two smallest wear capital letters so they read as
+          labels rather than titles. Watch how the space above each heading
+          shrinks as the levels descend:</p>
+        <h1>Heading one: the article title</h1>
+        <h2>Heading two: a major section</h2>
+        <h3>Heading three: a subsection</h3>
+        <h4>Heading four: a topic within it</h4>
+        <h5>Heading five: a small label</h5>
+        <h6>Heading six: the quietest label</h6>
+        <p>Notice the pair above: when one heading follows another with no
+          text between them, the gap closes so they read as a unit, the way a
+          title and subtitle should.</p>
+
+        <h2>Paragraphs</h2>
+        <p>The paragraph carries the whole design. Each line holds about
+          sixty-five characters, roughly the width your eye can sweep and
+          return from without losing its place. Here is Thoreau, from
+          <cite>Walden</cite>, doing what long-form prose does:
+        </p>
+        <p>I went to the woods because I wished to live deliberately, to
+          front only the essential facts of life, and see if I could not
+          learn what it had to teach, and not, when I came to die, discover
+          that I had not lived. I did not wish to live what was not life,
+          living is so dear; nor did I wish to practise resignation, unless
+          it was quite necessary.</p>
+        <p>A second paragraph follows the first after a small breath, close
+          enough that the essay flows, distinct enough that you never lose
+          the seam. End a Markdown line with two spaces and you get a hard
+          line break instead of a new paragraph:<br>like this, with no gap at
+          all.</p>
+
+        <h2>Emphasis</h2>
+        <p>Wrap a word in single asterisks for <em>italic</em>, double for
+          <strong>bold</strong>, and triple for <strong><em>bold
+              italic</em></strong>. Backticks mark <code>inline code</code>,
+          which
+          steps into a different typeface with a soft tinted background.
+          Weight, slant, and texture do the differentiating, never color
+          alone.
+        </p>
+
+        <h2>Small inline touches</h2>
+        <p><strong>Strikethrough:</strong> wrap text in double tildes and it
+          reads as <del>crossed out</del> revised.</p>
+        <p><strong>Highlight:</strong> the <code>&lt;mark&gt;</code> element
+          puts a <mark>gentle tint</mark> behind the words that matter.</p>
+        <p><strong>Subscript and superscript:</strong> chemistry gets
+          CO<sub>2</sub>; geometry gets a<sup>2</sup> + b<sup>2</sup> =
+          c<sup>2</sup>. Neither one knocks the line spacing off its
+          rhythm.</p>
+        <p><strong>Abbreviations:</strong> hover the
+          <abbr title="World Wide Web Consortium">W3C</abbr> and its full
+          name appears; the dotted underline hints that there is more to
+          see.
+        </p>
+        <p><strong>Keyboard keys:</strong> press <kbd>Ctrl</kbd> +
+          <kbd>S</kbd> to save, or <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
+          <kbd>P</kbd> for the command palette. Each key sits in its own
+          little cap.
+        </p>
+        <p>Try selecting any sentence on this page. The selection tint
+          comes from the theme, so it stays readable in light, sepia, and
+          dark alike.</p>
+
+        <h2>Links</h2>
+        <p>A link looks like <a href="#">this: colored, with a quiet
+            underline</a> that darkens when you hover. Markdown also turns bare
+          addresses into links automatically:
+          <a href="mailto:design@example.com">design@example.com</a> or
+          <a href="https://example.com">example.com</a>. Code can live inside
+          a link too: <a href="#"><code>npm install</code></a>. And when a
+          whole image is a link, the framework adds feedback of its own.
+          Hover the image below and it lifts with a soft shadow; that is the
+          only reason it is here:
+          <a href="#">
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iODAiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlOGU2ZTEiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjNTU1Ij5JbWFnZSBsaW5rOiBob3ZlciBtZTwvdGV4dD48L3N2Zz4="
+              alt="A placeholder image that is itself a link; it lifts on hover"
+              width="200" height="80">
+          </a>
+        </p>
+
+        <h2>Footnotes</h2>
+        <p>Write <code>[^1]</code> in Markdown and a small numbered
+          reference appears in the text<sup><a href="#fn-1" id="fnref-1"
+              data-footnote-ref>1</a></sup>. The notes themselves gather at
+          the very end of the article, far below, and each one links back to
+          where you left
+          off<sup><a href="#fn-2" id="fnref-2" data-footnote-ref>2</a></sup>.
+        </p>
+
+        <h2>Blockquotes</h2>
+        <p>Start a line with <code>&gt;</code> and Markdown sets the text
+          apart: larger, italic, with a rule down its left side:</p>
+        <blockquote>
+          <p>The details are not the details. They make the design.</p>
+          <footer>Charles Eames, <cite>Design Discourse</cite>,
+            <time datetime="1972-01-01">1972</time>
+          </footer>
+        </blockquote>
+        <p>Quotes nest when someone quotes a quote:</p>
+        <blockquote>
+          <p>The outer voice says something.</p>
+          <blockquote>
+            <p>An inner voice replies.</p>
+            <blockquote>
+              <p>And a third voice, deepest of all, still keeps its
+                spacing.</p>
+            </blockquote>
+          </blockquote>
+          <p>Then the outer voice returns.</p>
+        </blockquote>
+
+        <h2>Alerts</h2>
+        <p>GitHub extends the blockquote into five labelled callouts. Plain
+          GitHub Flavored Markdown leaves them as ordinary quotes; add the
+          alerts plugin to your pipeline and the framework colors each type
+          in every theme:</p>
+        <div class="markdown-alert markdown-alert-note">
+          <p class="markdown-alert-title">Note</p>
+          <p>Something worth knowing, even if you only skim.</p>
+        </div>
+        <div class="markdown-alert markdown-alert-tip">
+          <p class="markdown-alert-title">Tip</p>
+          <p>A shortcut, or a better way to do the thing.</p>
+        </div>
+        <div class="markdown-alert markdown-alert-important">
+          <p class="markdown-alert-title">Important</p>
+          <p>Information you need before you can succeed.</p>
+        </div>
+        <div class="markdown-alert markdown-alert-warning">
+          <p class="markdown-alert-title">Warning</p>
+          <p>Read this now, or something goes wrong soon.</p>
+        </div>
+        <div class="markdown-alert markdown-alert-caution">
+          <p class="markdown-alert-title">Caution</p>
+          <p>This action carries risk you should weigh first.</p>
+        </div>
+
+        <h2>Horizontal rules</h2>
+        <p>Type three hyphens on their own line and Markdown draws a
+          thematic break, a short centered rule that says the subject is
+          changing:</p>
+        <hr>
+        <p>And the prose picks up again on the other side.</p>
+
+        <h2>Bulleted lists</h2>
+        <p>Start lines with a hyphen and you get a bulleted list. A tight
+          list keeps its items close:</p>
+        <ul>
+          <li>Set the type first</li>
+          <li>Then the spacing</li>
+          <li>Then the color</li>
+        </ul>
+        <p>A loose list, where each item holds a full paragraph, breathes
+          a little more:</p>
+        <ul>
+          <li>
+            <p>The first item carries a complete thought, written as a
+              paragraph, and keeps the same comfortable line spacing as the
+              essay around it.</p>
+          </li>
+          <li>
+            <p>The second item does the same, so the list reads as prose
+              that happens to have bullets.</p>
+          </li>
+        </ul>
+        <p>Indent items and lists nest three levels deep without losing the
+          thread:</p>
+        <ul>
+          <li>Level one
+            <ul>
+              <li>Level two
+                <ul>
+                  <li>Level three</li>
+                  <li>Level three again</li>
+                </ul>
+              </li>
+              <li>Back to level two</li>
+            </ul>
+          </li>
+          <li>And back to level one</li>
+        </ul>
+
+        <h2>Numbered lists</h2>
+        <p>Start lines with numbers and Markdown counts for you:</p>
+        <ol>
+          <li>Establish the baseline</li>
+          <li>Define the structure</li>
+          <li>Refine the typography</li>
+        </ol>
+        <p>Lists can start wherever you like:</p>
+        <ol start="42">
+          <li>Item forty-two</li>
+          <li>Item forty-three</li>
+        </ol>
+        <p>Numbered and bulleted lists mix freely, even with checkboxes
+          inside:</p>
+        <ol>
+          <li>First, review the checklist
+            <ul>
+              <li><input type="checkbox" checked disabled> Audit the
+                typography</li>
+              <li><input type="checkbox" disabled> Verify the spacing</li>
+            </ul>
+          </li>
+          <li>Then, work through the sequence
+            <ol>
+              <li>Draft</li>
+              <li>Revise</li>
+            </ol>
+          </li>
+        </ol>
+
+        <h2>Task lists</h2>
+        <p>Write <code>- [ ]</code> and <code>- [x]</code> and Markdown
+          produces checkboxes. The framework draws its own: a rounded
+          square that fills with a check when done:</p>
+        <ul>
+          <li><input type="checkbox" checked disabled> Publish the
+            stylesheet</li>
+          <li><input type="checkbox" disabled> Review the pull request</li>
+          <li><input type="checkbox"> This one is live. Click it and watch
+            the check draw in</li>
+        </ul>
+
+        <h2>Definition lists</h2>
+        <p>Some Markdown flavors support term-and-definition pairs:</p>
+        <dl>
+          <dt>Voice</dt>
+          <dd>The personality of the writing, steady across everything you
+            publish.</dd>
+          <dt>Tone</dt>
+          <dd>The mood of the moment; it flexes with the reader's
+            situation.</dd>
+          <dt>Measure</dt>
+          <dd>The length of a line of text. This page holds it near
+            sixty-five characters.</dd>
+        </dl>
+
+        <h2>Code blocks</h2>
+        <p>Fence code with three backticks and it sits in its own bordered
+          panel, in a fixed-width typeface:</p>
+        <pre tabindex="0" class="shiki shiki-themes github-light github-dark"
+          style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e"
+          tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">/* A code block keeps every space exactly where you typed it */</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">:root</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">  --primary-font</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"Source Serif 4"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">serif</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">  --code-font</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"Source Code Pro"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">monospace</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+        <p>Long lines never break the page. The block scrolls sideways
+          instead, and you can scroll it from the keyboard too (click or tab
+          into it, then use the arrow keys):</p>
+        <pre tabindex="0" class="shiki shiki-themes github-light github-dark"
+          style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e"
+          tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> result</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> bootstrapApplicationFramework</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(globalSettings, userPreferences, networkConfiguration, offlineFallbackStrategy);</span></span></code></pre>
+
+        <h2>Tables</h2>
+        <p>Draw a table with pipes and hyphens. Headers get a strong rule
+          beneath them, rows get light ones, and the digits line up in tidy
+          columns:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Celestial body</th>
+              <th>Classification</th>
+              <th>Atmosphere</th>
+              <th align="right">Confirmed moons</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mercury</td>
+              <td>Terrestrial planet</td>
+              <td>Minimal (exosphere)</td>
+              <td align="right">0</td>
+            </tr>
+            <tr>
+              <td>Venus</td>
+              <td>Terrestrial planet</td>
+              <td>Thick CO<sub>2</sub></td>
+              <td align="right">0</td>
+            </tr>
+            <tr>
+              <td>Earth</td>
+              <td>Terrestrial planet</td>
+              <td>Nitrogen and oxygen</td>
+              <td align="right">1</td>
+            </tr>
+            <tr>
+              <td>Mars</td>
+              <td>Terrestrial planet</td>
+              <td>Thin CO<sub>2</sub></td>
+              <td align="right">2</td>
+            </tr>
+            <tr>
+              <td>Jupiter</td>
+              <td>Gas giant</td>
+              <td>Hydrogen and helium</td>
+              <td align="right">95</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>A table too wide for the page scrolls sideways instead of
+          breaking the layout. Try it on a phone:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Mission</th>
+              <th>Agency</th>
+              <th>Destination</th>
+              <th>Launched</th>
+              <th>Status</th>
+              <th>Claim to fame</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Voyager 1</td>
+              <td>NASA</td>
+              <td>Interstellar space</td>
+              <td>1977</td>
+              <td>Operational</td>
+              <td>The farthest human-made object from Earth.</td>
+            </tr>
+            <tr>
+              <td>Cassini–Huygens</td>
+              <td>NASA / ESA / ASI</td>
+              <td>Saturn system</td>
+              <td>1997</td>
+              <td>Concluded</td>
+              <td>Studied Saturn's rings and landed a probe on Titan.</td>
+            </tr>
+            <tr>
+              <td>Rosetta</td>
+              <td>ESA</td>
+              <td>Comet 67P</td>
+              <td>2004</td>
+              <td>Concluded</td>
+              <td>First spacecraft to orbit a comet and land on it.</td>
+            </tr>
+            <tr>
+              <td>James Webb Space Telescope</td>
+              <td>NASA / ESA / CSA</td>
+              <td>Sun–Earth L2</td>
+              <td>2021</td>
+              <td>Operational</td>
+              <td>The sharpest infrared views of deep space yet.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Images and figures</h2>
+        <p>An image on its own line becomes a centered block with soft
+          corners. In dark mode it dims slightly so it never glows against
+          the page:</p>
+        <img
+          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMzAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZmlsbD0iIzU1NSI+U3RhbmRhbG9uZSBpbWFnZTwvdGV4dD48L3N2Zz4="
+          alt="A wide placeholder image, standing alone between paragraphs"
+          width="800" height="300">
+        <p>Give an image a caption and it becomes a figure. The caption
+          sits beneath in a smaller, quieter typeface:</p>
+        <figure>
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMjUwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGFkYWRhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZmlsbD0iIzU1NSI+RmlndXJlIGltYWdlPC90ZXh0Pjwvc3ZnPg=="
+            alt="A placeholder image wrapped in a figure with a caption"
+            width="600" height="250">
+          <figcaption>Figure 1. A caption explains the image without
+            competing with it.</figcaption>
+        </figure>
+
+        <h2>Disclosures</h2>
+        <p>The <code>&lt;details&gt;</code> element folds content away
+          behind a clickable summary line, no scripts involved:</p>
+        <details>
+          <summary>Open a hidden panel</summary>
+          <p>This paragraph stays out of sight until you ask for it. The
+            browser handles the folding on its own.</p>
+        </details>
+        <details open>
+          <summary>This one starts open</summary>
+          <p>Close it and open it again. The content slides gently into
+            place rather than snapping.</p>
+          <ul>
+            <li>A list works inside a disclosure.</li>
+            <li>So does anything else.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>Disclosures nest, too</summary>
+          <p>The outer panel holds an inner one.</p>
+          <details>
+            <summary>Open the inner panel</summary>
+            <p>Each panel opens and closes on its own.</p>
+          </details>
+        </details>
+
+        <h2>Forms and buttons</h2>
+        <p>Reading pages sometimes ask for something back: a newsletter
+          signup, a comment, a search. Every control sits in the plainer
+          typeface, keeps a visible border, and shows a clear ring when you
+          reach it from the keyboard:</p>
+        <form aria-label="Sample newsletter form">
+          <p>
+            <label for="demo-name">Your name</label><br>
+            <input type="text" id="demo-name" name="name"
+              placeholder="Ada Lovelace">
+          </p>
+          <p>
+            <label for="demo-email">Email address</label><br>
+            <input type="email" id="demo-email" name="email"
+              placeholder="ada@example.com">
+          </p>
+          <p>
+            <label for="demo-topic">Favorite topic</label><br>
+            <select id="demo-topic" name="topic">
+              <option>Typography</option>
+              <option>Color</option>
+              <option>Spacing</option>
+            </select>
+          </p>
+          <p>
+            <label for="demo-message">A short message</label><br>
+            <textarea id="demo-message" name="message" rows="3"
+              placeholder="Tell us what you are reading."></textarea>
+          </p>
+          <p>
+            <button type="button">Subscribe</button>
+            <button type="button" disabled>Unavailable</button>
+          </p>
+        </form>
+        <p>Press and hold the Subscribe button; it dips slightly under
+          your finger. The disabled one fades and refuses the cursor.</p>
+
+        <h2>Mixed content and hard cases</h2>
+        <h3>A heading holding <code>code</code> and <strong>bold</strong></h3>
+        <p>Inline styling inside a heading inherits the heading's size and
+          keeps the line steady.</p>
+        <h3>Code inside a quote</h3>
+        <blockquote>
+          <p>Sometimes a quotation includes the code it discusses:</p>
+          <pre tabindex="0" class="shiki shiki-themes github-light github-dark"
+            style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e"
+            tabindex="0"><code><span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">table</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  display</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">block</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  overflow-x</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">auto</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+        </blockquote>
+        <h3>A list inside a quote</h3>
+        <blockquote>
+          <ul>
+            <li>The first quoted point keeps its indent.</li>
+            <li>The second keeps the rhythm.</li>
+          </ul>
+        </blockquote>
+        <h3>Code inside a list</h3>
+        <ul>
+          <li>Run <code>npm run build</code> to compile the stylesheet.</li>
+          <li>
+            Then ship it:
+            <pre tabindex="0"
+              class="shiki shiki-themes github-light github-dark"
+              style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e"
+              tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">$</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> scp</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> dist/style.css</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> server:/var/www/</span></span></code></pre>
+          </li>
+        </ul>
+        <h3>A table inside a disclosure</h3>
+        <details>
+          <summary>Open the compatibility table</summary>
+          <table>
+            <thead>
+              <tr>
+                <th>Requirement</th>
+                <th>Minimum version</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Node</td>
+                <td>20.11</td>
+              </tr>
+              <tr>
+                <td>Any modern browser</td>
+                <td>Mid-2024</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+
+        <section data-footnotes>
+          <ol>
+            <li id="fn-1">A footnote holds the aside that would interrupt the
+              paragraph. <a href="#fnref-1" data-footnote-backref
+                aria-label="Back to reference 1">↩</a></li>
+            <li id="fn-2">The arrow returns you to the exact sentence you came
+              from. <a href="#fnref-2" data-footnote-backref
+                aria-label="Back to reference 2">↩</a></li>
+          </ol>
+        </section>
+      </article>
+    </main>
+
+
+
+    <a class="back-to-top" href="#top" aria-label="Back to top"
+      title="Back to top">&#8593;</a>
+  </body>
+</html>

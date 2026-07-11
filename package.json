@@ -1,0 +1,10 @@
+{
+  "name": "rana-css",
+  "version": "1.0.0",
+  "description": "Rana — a CSS framework for calm, long-form reading. Styles default HTML and Markdown/GFM output; no utility classes, no JavaScript.",
+  "license": "MIT",
+  "style": "rana.css",
+  "files": ["rana.css", "rana-integrations.css", "README.md", "REQUIREMENTS.md"],
+  "keywords": ["css", "framework", "typography", "markdown", "gfm", "reading", "no-class", "dark-mode"],
+  "sideEffects": true
+}

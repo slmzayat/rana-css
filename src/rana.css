@@ -1,0 +1,955 @@
+/* ==========================================================================
+   RANA — a CSS framework for calm, long-form reading.
+   Styles default HTML and Markdown/GFM output directly; no utility classes.
+   Renderer-specific hooks (Shiki, GFM alerts, KaTeX, heading anchors) live
+   in rana-rana-integrations.css; import it alongside this file for Astro.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Web Fonts — Bunny Fonts (GDPR-safe, no user tracking)
+   Exactly the 8 static cuts the framework can produce; nothing more.
+     Source Serif 4:  400, 400 italic, 700, 700 italic
+     Source Sans 3:   400, 700
+     Source Code Pro: 400, 700
+   PERFORMANCE NOTE: for faster first paint, replace this @import with the
+   equivalent <link rel="stylesheet"> in <head> (plus
+   <link rel="preconnect" href="https://fonts.bunny.net">) — @import defers
+   font CSS until this stylesheet is parsed. The @import is kept here so the
+   framework remains functional as a single self-contained file.
+   -------------------------------------------------------------------------- */
+@import url("https://fonts.bunny.net/css?family=source-serif-4:400,400i,700,700i|source-sans-3:400,700|source-code-pro:400,700&display=swap");
+
+:root {
+  /* Both schemes declared; light-dark() below resolves per active scheme.
+     Follows prefers-color-scheme automatically, and can be switched
+     natively (no JS) by setting color-scheme, e.g. via :has() on a
+     radio/checkbox — see the test suite for the pattern. */
+  color-scheme: light dark;
+
+  /* Typography Fallbacks */
+  --font-serif: "Source Serif 4", "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif;
+  --font-sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Cantarell, Ubuntu, Roboto, Noto, Arial, sans-serif;
+  --font-mono: "Source Code Pro", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
+
+  --weight-regular: 400;
+  --weight-bold: 700;
+
+  /* Pico CSS Slate/Azure Palette — light, dark */
+  --color-bg: light-dark(#FFFFFF, #11191F);
+  --color-heading: light-dark(#181C25, #F1F3F5);
+  --color-body: light-dark(#2B3440, #C2C7D0);
+  --color-meta: light-dark(#526980, #7B8495);
+  --color-border: light-dark(#E0E5EB, #2D3540);
+  --color-code-bg: light-dark(#F3F5F7, #181C25);
+  --color-link: light-dark(#0172AD, #3B98D9);
+  --color-link-hover: light-dark(#015887, #7AB4DF);
+  --color-focus-ring: light-dark(rgba(1, 114, 173, 0.15), rgba(59, 152, 217, 0.2));
+  /* Selection: tinted background only, text color untouched, so contrast
+     is preserved automatically in both schemes. */
+  --color-selection: color-mix(in srgb, var(--color-link) 20%, var(--color-bg));
+
+  /* Emil Kowalski Animation Variables */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-fast: 150ms;
+  --duration-medium: 250ms;
+
+  --radius: 4px;
+
+  /* Vertical Rhythm Scale — every block margin in the framework draws from
+     these seven steps. Flow elements carry block-END margins only; headings
+     and breakout blocks add block-START; margin collapse resolves meetings. */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  /* prose flow gap (~0.8 line) */
+  --space-l: 2rem;
+  /* breakout air: quotes, media, code, tables */
+  --space-xl: 2.5rem;
+  /* mid-level section entry */
+  --space-2xl: 3rem;
+  /* major section entry, hr */
+  --space-3xl: 4rem;
+  /* document-level: footnotes, page padding */
+}
+
+/* Non-color dark adjustments (filters/shadows can't use light-dark()).
+   These follow the OS preference; a manual switcher should replicate them —
+   see the test suite. */
+@media (prefers-color-scheme: dark) {
+  img:not([src*=".svg"]) {
+    filter: brightness(0.85) contrast(1.1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover img {
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  a:focus-visible img {
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 0. Named Themes
+   Light and dark are automatic: every token above is a light-dark() pair
+   driven by color-scheme. The attribute hooks below let a page force a
+   scheme or select an alternate palette with plain HTML:
+     <html data-theme="dark">   <html data-theme="sepia">
+   Palettes live here in the framework; switch UIs live in the page. */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Sepia — Flexoki light (stephango.com/flexoki), warm paper */
+:root[data-theme="sepia"] {
+  color-scheme: light;
+  --color-bg: #FFFCF0;
+  /* paper */
+  --color-heading: #100F0F;
+  /* black */
+  --color-body: #100F0F;
+  /* tx */
+  --color-meta: #6F6E69;
+  /* tx-2 */
+  --color-border: #E6E4D9;
+  /* ui */
+  --color-code-bg: #F2F0E5;
+  /* bg-2 */
+  --color-link: #205EA6;
+  /* blue-600 */
+  --color-link-hover: #1A4F8C;
+  /* blue-700 */
+  --color-focus-ring: rgba(32, 94, 166, 0.18);
+}
+
+/* 1. System Resets & Base Layout */
+html {
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Two-weight system enforcement: combinations without a shipped cut
+     (e.g. sans italic) render at the nearest real cut instead of being
+     faux-bolded/faux-obliqued by the browser. */
+  font-synthesis: none;
+  /* Lock iOS Safari's landscape font inflation, which would break the
+     ch-based column math. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Modern, side-effect-free equivalent of text-rendering: optimizeLegibility */
+  font-kerning: normal;
+}
+
+::selection {
+  background-color: var(--color-selection);
+}
+
+/* Theme cross-fade: when color-scheme flips (OS switch or an on-page
+   toggle), themed surfaces glide to the new palette instead of snapping.
+   Interactive elements keep their own faster transitions. */
+body,
+pre,
+code,
+kbd,
+details,
+th,
+td,
+blockquote,
+hr,
+input,
+textarea,
+select {
+  transition: background-color var(--duration-medium) var(--ease-out-strong),
+    color var(--duration-medium) var(--ease-out-strong),
+    border-color var(--duration-medium) var(--ease-out-strong);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-serif);
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem);
+  font-weight: var(--weight-regular);
+  line-height: 1.6;
+  color: var(--color-body);
+  margin: 0;
+  font-optical-sizing: auto;
+  font-variant-numeric: oldstyle-nums;
+}
+
+body > :is(main, article) {
+  max-inline-size: 65ch;
+  margin-inline: auto;
+  padding-block: clamp(var(--space-l), 6vh, var(--space-3xl));
+  /* Safe-area insets: notched phones in landscape don't clip the text edge */
+  padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));
+}
+
+/* One focus ring for everything; element rules below only add to it */
+:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
+
+/* Scroll Targeting (Footnotes & Anchors) */
+*[id] {
+  scroll-margin-block-start: var(--space-l);
+}
+
+/* Touch interaction polish */
+a,
+button,
+input,
+select,
+textarea,
+summary,
+label {
+  /* Remove the double-tap-zoom delay heuristic on taps */
+  touch-action: manipulation;
+  /* iOS gray tap flash replaced by our own :active / :focus-visible feedback */
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+summary,
+label,
+input[type="checkbox"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 2. Typographic Hierarchy
+   Scale (at max clamp): 32 / 26 / 20 / 16 / 14 / 13 px.
+   Line-height runs inverse to size. Negative tracking only at display
+   sizes; the small-label treatment (uppercase, tracked) lives at h5/h6. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-heading);
+}
+
+/* Space above scales with hierarchy level (~3x the space below);
+   space below stays tight so a heading binds to its own content. */
+h1 {
+  margin-block: 0 var(--space-s);
+}
+
+h2 {
+  margin-block: var(--space-2xl) var(--space-s);
+}
+
+h3 {
+  margin-block: var(--space-xl) var(--space-xs);
+}
+
+h4 {
+  margin-block: var(--space-l) var(--space-xs);
+}
+
+h5,
+h6 {
+  margin-block: var(--space-l) var(--space-2xs);
+}
+
+/* A heading directly under a heading belongs to it — compress the gap */
+:is(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
+  margin-block-start: var(--space-s);
+}
+
+/* Nothing trails the document; nothing pushes it down from the top */
+body > :is(main, article) > :first-child {
+  margin-block-start: 0;
+}
+
+body > :is(main, article) > :last-child {
+  margin-block-end: 0;
+}
+
+h1 {
+  font-size: clamp(1.625rem, 1.35rem + 1.2vw, 2rem);
+  /* 26 → 32px */
+  font-weight: var(--weight-bold);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.625rem);
+  /* 22 → 26px */
+  font-weight: var(--weight-bold);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  /* 20px */
+  font-weight: var(--weight-bold);
+  line-height: 1.4;
+}
+
+h4 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  /* 16px */
+  font-weight: var(--weight-bold);
+  line-height: 1.45;
+}
+
+h5,
+h6 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-bold);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+h5 {
+  font-size: 0.875rem;
+}
+
+/* 14px */
+h6 {
+  font-size: 0.8125rem;
+  /* 13px */
+  color: var(--color-meta);
+}
+
+:is(h1, h2, h3, h4, h5, h6) a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 3. Inline Elements */
+/* Prose flow: bottom-only margins at one consistent gap */
+p,
+ul,
+ol {
+  margin-block-start: 0;
+  margin-block-end: var(--space-m);
+}
+
+/* Breakout blocks get extra air on both sides; collapse against
+   the flow gap resolves each meeting to the larger value */
+pre,
+blockquote,
+table,
+figure,
+details {
+  margin-block-start: var(--space-l);
+  margin-block-end: var(--space-l);
+}
+
+/* Global Overflow Insurance */
+p,
+li,
+blockquote,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* Widow/orphan control (progressive enhancement; ignored where unsupported) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+figcaption,
+summary {
+  text-wrap: balance;
+}
+
+p,
+li,
+blockquote {
+  text-wrap: pretty;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-link) 40%, transparent);
+  text-underline-offset: 0.2em;
+  transition: color var(--duration-fast) var(--ease-out-strong),
+    text-decoration-color var(--duration-fast) var(--ease-out-strong);
+}
+
+a:focus-visible {
+  border-radius: 2px;
+}
+
+strong {
+  font-weight: var(--weight-bold);
+  color: var(--color-heading);
+}
+
+em {
+  font-style: italic;
+}
+
+/* Nested emphasis flips back to roman (typographic convention).
+   Also keeps italic demand out of contexts without an italic cut. */
+em em,
+i em,
+em i,
+cite em {
+  font-style: normal;
+}
+
+del {
+  text-decoration: line-through;
+  color: var(--color-meta);
+}
+
+mark {
+  background-color: color-mix(in srgb, var(--color-link) 15%, transparent);
+  color: inherit;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background-color: var(--color-code-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.15em 0.4em;
+  color: var(--color-heading);
+  font-variant-ligatures: none;
+}
+
+sub,
+sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  inset-block-start: -0.5em;
+}
+
+sub {
+  inset-block-end: -0.25em;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  text-decoration-color: var(--color-meta);
+  cursor: help;
+}
+
+/* 4. Lists */
+ul,
+ol {
+  padding-inline-start: 2rem;
+}
+
+li {
+  margin-block-end: var(--space-2xs);
+}
+
+/* Markers read at full ink, matching the item text: an understyled
+   marker undersells the "this is a list" signal (Practical Typography).
+   Inherited (not hardcoded) so footnote lists, which set a meta-colored
+   ol, get quieter markers automatically without a second rule. */
+li::marker {
+  color: inherit;
+}
+
+/* Numbered-list indices are structure, not prose: sans voice, bold, and
+   lining figures (vs. the serif oldstyle numerals of running text) so
+   digits stay upright and aligned, the way Practical Typography suggests
+   setting list indices apart from item text. */
+ol > li::marker {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+li > ul,
+li > ol {
+  margin-block-start: var(--space-2xs);
+  margin-block-end: 0;
+}
+
+/* 5. Blockquotes */
+blockquote {
+  margin-inline: 0;
+  padding-inline-start: clamp(1rem, 3vw, 1.5rem);
+  border-inline-start: 1px solid var(--color-border);
+  font-size: 1em;
+  font-style: normal;
+  line-height: 1.6;
+  color: var(--color-meta);
+}
+
+blockquote p:last-child {
+  margin-block-end: 0;
+}
+
+/* 6. Code & Preformatted Text */
+pre,
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: var(--weight-regular);
+  background-color: var(--color-code-bg);
+  border-radius: var(--radius);
+  font-variant-ligatures: none;
+}
+
+code {
+  padding-block: 0.2em;
+  padding-inline: 0.4em;
+  overflow-wrap: anywhere;
+}
+
+pre {
+  padding: 1.25rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  line-height: 1.6;
+  border: 1px solid var(--color-border);
+}
+
+/* pre needs tabindex="0" in HTML for keyboard scrolling (see REQUIREMENTS);
+   the global :focus-visible ring covers it. */
+pre code {
+  padding: 0;
+  background-color: transparent;
+  white-space: pre;
+}
+
+p code,
+li code,
+td code {
+  line-height: normal;
+}
+
+/* 7. Tables */
+/* display:block enables horizontal overflow scrolling on narrow screens.
+   Trade-off: some AT loses table semantics. The wrapper-div approach in
+   REQUIREMENTS.md is preferred where the pipeline allows it. */
+table {
+  display: block;
+  overflow-x: auto;
+  /* Edge of a scrolled table shouldn't chain into browser back/forward swipe */
+  overscroll-behavior-x: contain;
+  max-inline-size: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  /* Digits align vertically in columns of figures, at full cap-height
+     (lining) rather than the body's oldstyle figures */
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+th,
+td {
+  /* Generous inline margin between columns keeps a border-free grid
+     legible (Practical Typography: increase cell margins before adding
+     rules back in) */
+  padding-block: 0.75rem;
+  padding-inline: 1.25rem;
+  text-align: start;
+  border-block-end: 1px solid var(--color-border);
+  /* One line per cell, always. Without this, table-layout:auto quietly
+     squeezes columns to fit and wraps cell text instead, so a table with
+     one long column balloons every row to match it -- a scan-breaking
+     wall of ragged multi-line cells. A cell that needs more room now
+     makes the table wider instead, which the table's own overflow-x:auto
+     turns into a real horizontal scroll: rows stay one line tall and the
+     "scrolls sideways instead of breaking" promise below is actually kept. */
+  white-space: nowrap;
+}
+
+th {
+  font-weight: var(--weight-bold);
+  color: var(--color-heading);
+  border-block-end: 1px solid var(--color-heading);
+}
+
+/* Wide tables scroll; keep the row label in view while they do, so a
+   glance sideways doesn't cost you which row you were reading. Inert
+   (and harmless) on tables that already fit without scrolling. */
+tr > :first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  background-color: var(--color-bg);
+}
+
+/* 8. Structural & Media */
+hr {
+  border: 0;
+  border-block-start: 1px solid var(--color-border);
+  margin-block: var(--space-2xl);
+  margin-inline: auto;
+  inline-size: 50%;
+}
+
+figure {
+  margin-inline: 0;
+}
+
+img,
+video,
+iframe {
+  max-inline-size: 100%;
+  block-size: auto;
+  display: block;
+  margin-inline: auto;
+  margin-block: var(--space-l);
+  border-radius: var(--radius);
+  border: none;
+}
+
+figure img,
+figure video,
+figure iframe {
+  margin-block: 0;
+}
+
+iframe {
+  aspect-ratio: 16 / 9;
+}
+
+figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-meta);
+  text-align: center;
+  margin-block-start: var(--space-xs);
+}
+
+a img {
+  transition: transform var(--duration-fast) var(--ease-out-strong),
+    box-shadow var(--duration-fast) var(--ease-out-strong);
+  transform-origin: bottom center;
+}
+
+a:focus-visible img {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+}
+
+/* 9. Forms & Buttons */
+/* All UI controls use the sans face at an explicit weight. Previously
+   inputs inherited the body serif while buttons were sans — a mixed-face
+   form. Serif is for reading; interface chrome is uniformly sans. */
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: var(--weight-regular);
+  color: inherit;
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea,
+select {
+  inline-size: 100%;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
+  margin-block-start: var(--space-2xs);
+  margin-block-end: var(--space-m);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: border-color var(--duration-fast) var(--ease-out-strong),
+    box-shadow var(--duration-fast) var(--ease-out-strong),
+    background-color var(--duration-medium) var(--ease-out-strong),
+    color var(--duration-medium) var(--ease-out-strong);
+}
+
+/* Windows dark-mode bug: native dropdowns need explicit colors or the
+   option list can render invisible (white-on-white / black-on-black) */
+select {
+  background-color: var(--color-bg);
+  color: var(--color-body);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  /* :focus (not :focus-visible): fields ring on click too */
+  border-color: var(--color-link);
+  box-shadow: 0 0 0 4px var(--color-focus-ring);
+}
+
+button {
+  display: inline-block;
+  padding-block: 0.6rem;
+  padding-inline: 1.5rem;
+  background-color: var(--color-link);
+  /* Dark ink on the lighter dark-mode blue keeps text at AA (~7:1);
+     white on #3B98D9 was ~2.6:1 */
+  color: light-dark(#FFFFFF, #11191F);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out-strong),
+    box-shadow var(--duration-fast) var(--ease-out-strong),
+    transform var(--duration-fast) var(--ease-out-strong);
+}
+
+button:focus-visible {
+  box-shadow: 0 0 0 4px var(--color-focus-ring);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 10. Task Lists (classless via :has(); legacy class fallbacks included) */
+ul:has(> li > input[type="checkbox"]) {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+li:has(> input[type="checkbox"]) {
+  display: flex;
+  align-items: flex-start;
+}
+
+li input[type="checkbox"] {
+  appearance: none;
+  inline-size: 1.2rem;
+  block-size: 1.2rem;
+  border: 2px solid var(--color-meta);
+  border-radius: 3px;
+  margin-inline-end: 0.75rem;
+  margin-block-start: var(--space-3xs);
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+  transition: background-color var(--duration-fast) var(--ease-out-strong),
+    border-color var(--duration-fast) var(--ease-out-strong);
+}
+
+li input[type="checkbox"]:checked {
+  background-color: var(--color-link);
+  border-color: var(--color-link);
+}
+
+li input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 30%;
+  inset-block-start: 10%;
+  inline-size: 30%;
+  block-size: 60%;
+  border: solid light-dark(#FFFFFF, #11191F);
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  transform: rotate(45deg) scale(0.95);
+  transition: opacity var(--duration-fast) var(--ease-out-strong),
+    transform var(--duration-fast) var(--ease-out-strong);
+}
+
+li input[type="checkbox"]:checked::after {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+}
+
+/* 11. Footnotes (GFM data attributes; legacy class fallbacks included) */
+a[data-footnote-ref],
+a[data-footnote-backref] {
+  text-decoration: none;
+  color: var(--color-link);
+  padding: 0.5rem;
+  margin-inline: -0.5rem;
+}
+
+section[data-footnotes] {
+  margin-block-start: clamp(var(--space-2xl), 8vh, var(--space-3xl));
+  padding-block-start: var(--space-l);
+  border-block-start: 1px solid var(--color-border);
+}
+
+section[data-footnotes] ol {
+  padding-inline-start: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--color-meta);
+  font-family: var(--font-sans);
+}
+
+section[data-footnotes] li {
+  margin-block-end: var(--space-2xs);
+}
+
+section[data-footnotes] li p {
+  display: inline;
+  margin-block-end: 0;
+}
+
+a[data-footnote-backref] {
+  font-family: var(--font-sans);
+  /* The shared rule above already pads 0.5rem for the tap target;
+     pull the glyph back so the visible gap is a normal word space. */
+  margin-inline-start: -0.25rem;
+}
+
+/* 12. Accordions (Native Details/Summary) */
+details {
+  background-color: var(--color-code-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  /* Lets height animate to/from auto — pure CSS, no scripts */
+  interpolate-size: allow-keywords;
+}
+
+/* Native open/close slide (browsers without ::details-content support
+   simply snap, exactly as before) */
+details::details-content {
+  block-size: 0;
+  overflow: clip;
+  opacity: 0;
+  transition: block-size var(--duration-medium) var(--ease-out-strong),
+    opacity var(--duration-medium) var(--ease-out-strong),
+    content-visibility var(--duration-medium) allow-discrete;
+}
+
+details[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
+summary {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-bold);
+  color: var(--color-heading);
+  cursor: pointer;
+  list-style: none;
+  transition: color var(--duration-fast) var(--ease-out-strong);
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Custom marker rotates a quarter turn on open */
+summary::before {
+  content: "\25B8";
+  /* ▸ */
+  display: inline-block;
+  margin-inline-end: 0.5rem;
+  color: var(--color-meta);
+  transition: transform var(--duration-fast) var(--ease-out-strong),
+    color var(--duration-fast) var(--ease-out-strong);
+}
+
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+summary:focus-visible {
+  border-radius: 2px;
+}
+
+/* hover also warms the marker */
+
+/* 13. Hover (fine pointers only; touch gets :active and :focus-visible) */
+@media (hover: hover) and (pointer: fine) {
+
+  h1 a:hover,
+  h2 a:hover,
+  h3 a:hover,
+  h4 a:hover,
+  h5 a:hover,
+  h6 a:hover {
+    color: inherit;
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--color-link-hover);
+    text-decoration-color: var(--color-link-hover);
+  }
+
+  a:hover img {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+  }
+
+  button:hover {
+    background-color: var(--color-link-hover);
+  }
+
+  a[data-footnote-ref]:hover,
+  a[data-footnote-backref]:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-link-hover);
+  }
+
+  summary:hover {
+    color: var(--color-link);
+  }
+
+  summary:hover::before {
+    color: var(--color-link);
+  }
+}

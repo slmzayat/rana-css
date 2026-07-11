@@ -1,0 +1,112 @@
+/* ==========================================================================
+   RANA-INTEGRATIONS.CSS — Renderer-specific overlay for rana.css
+   Import AFTER rana.css. Safe to omit outside Astro/rehype/KaTeX pipelines.
+
+   Couplings:
+   1. Shiki dual themes  — requires shikiConfig.themes in astro.config.mjs
+   2. Heading anchors    — requires rehype-autolink-headings with
+                           className: ['heading-link'] (see REQUIREMENTS.md)
+   3. KaTeX display math — requires remark-math + rehype-katex
+   ========================================================================== */
+
+/* 1. Shiki Code Blocks (Astro) ------------------------------------------- */
+/* Inherit rana.css pre styling for Shiki's wrapper */
+.astro-code, .shiki {
+  /* Panel surface follows the active theme (light, sepia, or dark) while
+     token colors come from Shiki. !important beats Shiki's inline style. */
+  background-color: var(--color-code-bg) !important;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: var(--weight-regular);
+  border-radius: 4px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  line-height: 1.6;
+  border: 1px solid var(--color-border);
+}
+
+.astro-code:focus-visible, .shiki:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
+
+.astro-code code, .shiki code {
+  padding: 0;
+  background-color: transparent;
+  white-space: pre;
+  border-radius: 0;
+}
+
+/* Shiki dual-theme token switch. Generate with defaultColor: false so
+   both palettes arrive as CSS variables on each token; the cascade then
+   owns the choice. !important beats Shiki's inline style="" declarations.
+   A manual theme switcher overrides these with a higher-specificity rule
+   (see the test suite). */
+.astro-code span, .shiki span {
+  color: var(--shiki-light) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .astro-code span, .shiki span {
+    color: var(--shiki-dark) !important;
+  }
+}
+
+/* 2. Heading Anchor Links (rehype-autolink-headings) --------------------- */
+a.heading-link {
+  opacity: 0;
+  margin-inline-start: 0.5em;
+  text-decoration: none;
+  color: var(--color-meta);
+  transition: opacity var(--duration-fast) var(--ease-out-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(h1, h2, h3, h4, h5, h6):hover a.heading-link {
+    opacity: 1;
+  }
+}
+
+a.heading-link:focus-visible {
+  opacity: 1;
+}
+
+/* 3. KaTeX Display Math --------------------------------------------------- */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.5rem;
+}
+
+/* 4. GFM Alerts (rehype-github-alerts) ------------------------------------ */
+/* Markdown: > [!NOTE] etc. Requires the alerts plugin in the unified
+   pipeline; without it, alerts remain plain blockquotes (still legible).
+   Colors are light-dark() pairs, so every theme — including any custom
+   light palette such as Flexoki sepia — resolves them natively. */
+.markdown-alert {
+  --alert-color: var(--color-meta);
+  margin-block: var(--space-l);
+  padding-block: 0.75rem;
+  padding-inline: 1.25rem;
+  border-inline-start: 3px solid var(--alert-color);
+  border-radius: 0 4px 4px 0;
+  background-color: color-mix(in srgb, var(--alert-color) 6%, var(--color-bg));
+}
+
+.markdown-alert > p { margin-block-end: 0.5rem; }
+.markdown-alert > p:last-child { margin-block-end: 0; }
+
+.markdown-alert-title {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-bold);
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--alert-color);
+}
+
+.markdown-alert-note      { --alert-color: light-dark(#0969DA, #4493F8); }
+.markdown-alert-tip       { --alert-color: light-dark(#1A7F37, #3FB950); }
+.markdown-alert-important { --alert-color: light-dark(#8250DF, #AB7DF8); }
+.markdown-alert-warning   { --alert-color: light-dark(#9A6700, #D29922); }
+.markdown-alert-caution   { --alert-color: light-dark(#CF222E, #F85149); }
