@@ -412,3 +412,67 @@ table rule already rejects vertical rules as clutter, and the opaque
 background alone is enough of a seam. Inert (not just harmless) on any
 table that already fits without scrolling, so it needed no conditional
 logic and no renderer hook to detect "this table happens to be wide."
+
+## Browser floor raised: mid-2024 to mid-2026
+
+Moved the stated floor forward two years and swept both stylesheets for
+anything that only existed to serve the old one. Nothing here changed
+computed style; it is a subtraction and consolidation pass.
+
+**Removed: `-moz-osx-font-smoothing`.** Firefox 128 (2024) began aliasing
+`-webkit-font-smoothing: antialiased` to the exact effect the Mozilla
+property provided, confirmed via the WebKit-aliasing intent thread on
+mozilla.dev-platform. Keeping both was pure redundancy once Firefox
+reads the WebKit one directly. `-webkit-font-smoothing` itself stays:
+still non-standard, still required, no engine has a spec-track
+replacement.
+
+**Removed: `-webkit-hyphens`.** Safari shipped unprefixed `hyphens` in
+Safari 17 (September 2023), confirmed against the WebKit 17.0 feature
+blog post. Every engine in the mid-2026 floor is well past that.
+
+**Kept, and now documented inline, three prefixes that looked removable
+but verified otherwise:** `-webkit-text-size-adjust` (Safari has never
+shipped an unprefixed version, and Firefox has no equivalent at all, so
+both declarations stay); `-webkit-tap-highlight-color` (non-standard,
+no replacement proposed anywhere); `-webkit-user-select` (WebKit's own
+unprefixing patch, bug 208677, shipped and was reverted in 2022 over an
+Outlook-on-iOS regression, and remains unshipped per Interop 2025
+tracking). The lesson worth keeping: caniuse's rendered summary claimed
+Safari had "always" supported plain `user-select`, which was wrong;
+only reading WebKit's own bug tracker and changeset history surfaced the
+revert. Don't trust a single secondary source on prefix history again.
+
+**Removed: `summary::-webkit-details-marker`? No** — checked and kept.
+Safari still won't hide the native disclosure triangle via `list-style:
+none` or `::marker` on `<summary>`; the non-standard pseudo-element is
+still the only way. Added a comment so a future pass doesn't re-remove
+it on the assumption that `list-style: none` (already present on
+`summary`) is sufficient.
+
+**Adopted: native CSS nesting, selectively.** Verified relaxed nesting
+(bare type selectors as the first nested rule, no `&` required) and
+nested at-rules both reached Chrome 120, Firefox 117, and Safari 17.2 by
+December 2023 — comfortably inside the new floor. Applied only where a
+literal repeated selector prefix already existed across separate rules
+for the same component: `figure` + its `img/video/iframe` override,
+the four `li input[type="checkbox"]` state rules, the `details` +
+`::details-content` pair, the four-rule `.astro-code`/`.shiki` Shiki
+block (which also nests its `@media (prefers-color-scheme: dark)`
+override), and `.markdown-alert` + its `> p` rules. Every merge flattens
+to the exact original selector list and specificity; none was verified
+by eye alone, each was diffed against the pre-nesting selector.
+
+**Explicitly left flat:** the hover media-query block (`h1 a:hover` through
+`h6 a:hover`, and the rest) was not touched, even though `:is()` nesting
+would have shrunk it too — CLAUDE.md calls out "the single hover media
+block" as an invariant to preserve exactly, and restructuring its
+internal selectors, even losslessly, wasn't worth the risk of that being
+read as a violation. Also left flat: `pre`/`pre code` (the saving was one
+repeated word, not worth the added visual nesting depth), the form
+element rules (input/textarea/select/button selector lists overlap
+irregularly, no clean common parent to nest under), and
+`a[data-footnote-ref], a[data-footnote-backref]` plus its `-backref`-only
+follow-up rule (nesting would have required attaching an attribute
+selector to an `:is()`-flattened `&`, which is harder to read than the
+two flat rules it would replace, not easier).

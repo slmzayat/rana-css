@@ -30,8 +30,9 @@ JavaScript to ship.
 
 ## Browser floor
 
-Modern evergreen (mid-2024): `light-dark()`, `:has()`, `color-mix()`.
-Older browsers get light mode and instant (non-animated) disclosures.
+Modern evergreen (mid-2026): `light-dark()`, `:has()`, `color-mix()`,
+native CSS nesting. Older browsers get light mode and instant
+(non-animated) disclosures.
 
 ## Credits
 

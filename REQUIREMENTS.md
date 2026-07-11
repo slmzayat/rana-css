@@ -8,6 +8,21 @@
   rehype-autolink-headings. Import after rana.css. Safe to omit outside
   those pipelines.
 
+## Browser floor
+
+Both stylesheets target mid-2026 evergreen browsers: current Chrome,
+Firefox, and Safari on iOS. Load-bearing features at that floor:
+`light-dark()`, `:has()`, `color-mix()`, and native CSS nesting
+(including the relaxed syntax that allows a bare type selector as the
+first nested rule, and nesting at-rules like `@media` inside a normal
+style rule). A handful of vendor-prefixed declarations remain even at
+this floor because no engine has shipped a standard replacement yet, or
+because one engine's unprefixing attempt was reverted: `-webkit-text-size-adjust`,
+`-webkit-tap-highlight-color`, `-webkit-user-select`, and
+`summary::-webkit-details-marker`. See the inline comments at each
+declaration in rana.css for specifics. Do not raise this floor, or add
+fallbacks for browsers below it, without asking.
+
 ## Astro version compatibility
 
 Both stylesheets are pure CSS and work under Astro 6 and 7. The pipeline

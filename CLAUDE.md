@@ -41,8 +41,10 @@ plain CSS shipped as-is.
 - Contrast standard: WCAG AA minimum, target AAA contrast (SC 1.4.6,
   7:1 for normal text). Check every color change against all themes:
   light, dark, and sepia. <!-- If AA-only was chosen, edit this line. -->
-- Browser floor: mid-2024 evergreen (light-dark(), :has(), color-mix()).
-  Do not add legacy fallbacks; do not raise the floor without asking.
+- Browser floor: mid-2026 evergreen (current Chrome, Firefox, and Safari
+  on iOS) — light-dark(), :has(), color-mix(), native CSS nesting
+  (relaxed syntax, nested at-rules). Do not add legacy fallbacks; do not
+  raise the floor without asking.
 - The demo (demo/index.html) is zero-JS. Shiki code blocks are
   pre-rendered at build time with defaultColor: false; both palettes
   arrive as --shiki-light/--shiki-dark variables.

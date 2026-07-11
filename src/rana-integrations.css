@@ -23,32 +23,30 @@
   overflow-x: auto;
   line-height: 1.6;
   border: 1px solid var(--color-border);
-}
 
-.astro-code:focus-visible, .shiki:focus-visible {
-  outline: 2px solid var(--color-link);
-  outline-offset: 2px;
-}
+  &:focus-visible {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
+  }
 
-.astro-code code, .shiki code {
-  padding: 0;
-  background-color: transparent;
-  white-space: pre;
-  border-radius: 0;
-}
+  code {
+    padding: 0;
+    background-color: transparent;
+    white-space: pre;
+    border-radius: 0;
+  }
 
-/* Shiki dual-theme token switch. Generate with defaultColor: false so
-   both palettes arrive as CSS variables on each token; the cascade then
-   owns the choice. !important beats Shiki's inline style="" declarations.
-   A manual theme switcher overrides these with a higher-specificity rule
-   (see the test suite). */
-.astro-code span, .shiki span {
-  color: var(--shiki-light) !important;
-}
+  /* Shiki dual-theme token switch. Generate with defaultColor: false so
+     both palettes arrive as CSS variables on each token; the cascade then
+     owns the choice. !important beats Shiki's inline style="" declarations.
+     A manual theme switcher overrides these with a higher-specificity rule
+     (see the test suite). */
+  span {
+    color: var(--shiki-light) !important;
 
-@media (prefers-color-scheme: dark) {
-  .astro-code span, .shiki span {
-    color: var(--shiki-dark) !important;
+    @media (prefers-color-scheme: dark) {
+      color: var(--shiki-dark) !important;
+    }
   }
 }
 
@@ -91,10 +89,13 @@ a.heading-link:focus-visible {
   border-inline-start: 3px solid var(--alert-color);
   border-radius: 0 4px 4px 0;
   background-color: color-mix(in srgb, var(--alert-color) 6%, var(--color-bg));
-}
 
-.markdown-alert > p { margin-block-end: 0.5rem; }
-.markdown-alert > p:last-child { margin-block-end: 0; }
+  > p {
+    margin-block-end: 0.5rem;
+
+    &:last-child { margin-block-end: 0; }
+  }
+}
 
 .markdown-alert-title {
   font-family: var(--font-sans);

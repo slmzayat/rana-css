@@ -642,6 +642,12 @@ hr {
 
 figure {
   margin-inline: 0;
+
+  img,
+  video,
+  iframe {
+    margin-block: 0;
+  }
 }
 
 img,
@@ -654,12 +660,6 @@ iframe {
   margin-block: var(--space-l);
   border-radius: var(--radius);
   border: none;
-}
-
-figure img,
-figure video,
-figure iframe {
-  margin-block: 0;
 }
 
 iframe {
@@ -794,31 +794,31 @@ li input[type="checkbox"] {
   background-color: transparent;
   transition: background-color var(--duration-fast) var(--ease-out-strong),
     border-color var(--duration-fast) var(--ease-out-strong);
-}
 
-li input[type="checkbox"]:checked {
-  background-color: var(--color-link);
-  border-color: var(--color-link);
-}
+  &:checked {
+    background-color: var(--color-link);
+    border-color: var(--color-link);
+  }
 
-li input[type="checkbox"]::after {
-  content: "";
-  position: absolute;
-  inset-inline-start: 30%;
-  inset-block-start: 10%;
-  inline-size: 30%;
-  block-size: 60%;
-  border: solid light-dark(#FFFFFF, #11191F);
-  border-width: 0 2px 2px 0;
-  opacity: 0;
-  transform: rotate(45deg) scale(0.95);
-  transition: opacity var(--duration-fast) var(--ease-out-strong),
-    transform var(--duration-fast) var(--ease-out-strong);
-}
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 30%;
+    inset-block-start: 10%;
+    inline-size: 30%;
+    block-size: 60%;
+    border: solid light-dark(#FFFFFF, #11191F);
+    border-width: 0 2px 2px 0;
+    opacity: 0;
+    transform: rotate(45deg) scale(0.95);
+    transition: opacity var(--duration-fast) var(--ease-out-strong),
+      transform var(--duration-fast) var(--ease-out-strong);
+  }
 
-li input[type="checkbox"]:checked::after {
-  opacity: 1;
-  transform: rotate(45deg) scale(1);
+  &:checked::after {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
 }
 
 /* 11. Footnotes (GFM data attributes) */
@@ -867,22 +867,22 @@ details {
   padding: 1rem;
   /* Lets height animate to/from auto — pure CSS, no scripts */
   interpolate-size: allow-keywords;
-}
 
-/* Native open/close slide (browsers without ::details-content support
-   simply snap, exactly as before) */
-details::details-content {
-  block-size: 0;
-  overflow: clip;
-  opacity: 0;
-  transition: block-size var(--duration-medium) var(--ease-out-strong),
-    opacity var(--duration-medium) var(--ease-out-strong),
-    content-visibility var(--duration-medium) allow-discrete;
-}
+  /* Native open/close slide (browsers without ::details-content support
+     simply snap, exactly as before) */
+  &::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition: block-size var(--duration-medium) var(--ease-out-strong),
+      opacity var(--duration-medium) var(--ease-out-strong),
+      content-visibility var(--duration-medium) allow-discrete;
+  }
 
-details[open]::details-content {
-  block-size: auto;
-  opacity: 1;
+  &[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
 }
 
 summary {
