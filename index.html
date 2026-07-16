@@ -48,7 +48,7 @@
         --color-focus-ring: rgba(11, 76, 69, 0.18);
       }
 
-      main > section {
+      main>section {
         margin-block: var(--space-3xl);
       }
 
@@ -257,10 +257,10 @@
       <form class="theme-picker" aria-label="Theme preference">
         <fieldset>
           <legend>Try a theme.</legend>
-          <label><input type="radio" value="auto" name="theme" id="theme-auto"
-              checked>Auto</label>
-          <label><input type="radio" value="gray" name="theme"
-              id="theme-gray">Light</label>
+          <label><input type="radio" value="auto" name="theme"
+              id="theme-auto">Auto</label>
+          <label><input type="radio" value="gray" name="theme" id="theme-gray"
+              checked>Light</label>
           <label><input type="radio" value="sepia" name="theme"
               id="theme-sepia">Sepia</label>
           <label><input type="radio" value="mint" name="theme"
@@ -278,35 +278,53 @@
           footnotes, task lists, tables, and alerts. No JavaScript, no
           preprocessor, no dependencies. The core
           is 6 KB gzipped. The file you read in the repo is the file the
-          browser runs.</p>
+          browser runs.
+        </p>
 
         <div class="features">
           <article>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M29,3.5C29,3.776,28.776,4,28.5,4S28,3.776,28,3.5S28.224,3,28.5,3S29,3.224,29,3.5z M26.5,3	C26.224,3,26,3.224,26,3.5S26.224,4,26.5,4S27,3.776,27,3.5S26.776,3,26.5,3z M24.5,3C24.224,3,24,3.224,24,3.5S24.224,4,24.5,4	S25,3.776,25,3.5S24.776,3,24.5,3z M31,30.36H1c-0.199,0-0.36-0.161-0.36-0.36V2c0-0.199,0.161-0.36,0.36-0.36h30	c0.199,0,0.36,0.161,0.36,0.36v28C31.36,30.199,31.199,30.36,31,30.36z M1.36,29.64h29.28V5.36H1.36V29.64z M1.36,4.64h29.28V2.36	H1.36V4.64z M14,26.36H4v-0.72h10V26.36z M20,24.36H4v-0.72h16V24.36z M20,22.36H4v-0.72h16V22.36z M20,20.36H4v-0.72h16V20.36z M10,18.36H4v-0.72h6V18.36z M14,14.36H4v-0.72h10V14.36z M20,12.36H4v-0.72h16V12.36z M20,10.36H4V9.64h16V10.36z M10,8.36H4V7.64	h6V8.36z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+              aria-hidden="true">
+              <path
+                d="M29,3.5C29,3.776,28.776,4,28.5,4S28,3.776,28,3.5S28.224,3,28.5,3S29,3.224,29,3.5z M26.5,3	C26.224,3,26,3.224,26,3.5S26.224,4,26.5,4S27,3.776,27,3.5S26.776,3,26.5,3z M24.5,3C24.224,3,24,3.224,24,3.5S24.224,4,24.5,4	S25,3.776,25,3.5S24.776,3,24.5,3z M31,30.36H1c-0.199,0-0.36-0.161-0.36-0.36V2c0-0.199,0.161-0.36,0.36-0.36h30	c0.199,0,0.36,0.161,0.36,0.36v28C31.36,30.199,31.199,30.36,31,30.36z M1.36,29.64h29.28V5.36H1.36V29.64z M1.36,4.64h29.28V2.36	H1.36V4.64z M14,26.36H4v-0.72h10V26.36z M20,24.36H4v-0.72h16V24.36z M20,22.36H4v-0.72h16V22.36z M20,20.36H4v-0.72h16V20.36z M10,18.36H4v-0.72h6V18.36z M14,14.36H4v-0.72h10V14.36z M20,12.36H4v-0.72h16V12.36z M20,10.36H4V9.64h16V10.36z M10,8.36H4V7.64	h6V8.36z" />
+            </svg>
             <h3>Typography that reads</h3>
             <p>A serif for reading, a sans-serif for headings and labels,
               and a monospace for code. Fluid sizes on a 65-character
               measure.</p>
           </article>
           <article>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M15,31.36H5c-0.199,0-0.36-0.161-0.36-0.36V1	c0-0.199,0.161-0.36,0.36-0.36h10c0.199,0,0.36,0.161,0.36,0.36v3.559l11.951,20.259c0.048,0.082,0.062,0.181,0.038,0.273	c-0.024,0.092-0.084,0.171-0.166,0.22l-5.873,3.445l0.039,0.155c0.049,0.192-0.066,0.388-0.259,0.438l-5.73,1.473V31	C15.36,31.199,15.199,31.36,15,31.36z M5.36,30.64h9.28v-5.28H5.36V30.64z M15.36,8.219v21.859l5.203-1.338L15.36,8.219z M15.665,6.493l5.46,21.535l5.382-3.156L15.665,6.493z M5.36,24.64h9.28v-5.28H5.36V24.64z M5.36,18.64h9.28v-5.28H5.36V18.64z M5.36,12.64h9.28V1.36H5.36V12.64z M10,8.36C9.25,8.36,8.64,7.75,8.64,7S9.25,5.64,10,5.64S11.36,6.25,11.36,7S10.75,8.36,10,8.36z M10,6.36C9.647,6.36,9.36,6.647,9.36,7S9.647,7.64,10,7.64S10.64,7.353,10.64,7S10.353,6.36,10,6.36z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+              aria-hidden="true">
+              <path
+                d="M15,31.36H5c-0.199,0-0.36-0.161-0.36-0.36V1	c0-0.199,0.161-0.36,0.36-0.36h10c0.199,0,0.36,0.161,0.36,0.36v3.559l11.951,20.259c0.048,0.082,0.062,0.181,0.038,0.273	c-0.024,0.092-0.084,0.171-0.166,0.22l-5.873,3.445l0.039,0.155c0.049,0.192-0.066,0.388-0.259,0.438l-5.73,1.473V31	C15.36,31.199,15.199,31.36,15,31.36z M5.36,30.64h9.28v-5.28H5.36V30.64z M15.36,8.219v21.859l5.203-1.338L15.36,8.219z M15.665,6.493l5.46,21.535l5.382-3.156L15.665,6.493z M5.36,24.64h9.28v-5.28H5.36V24.64z M5.36,18.64h9.28v-5.28H5.36V18.64z M5.36,12.64h9.28V1.36H5.36V12.64z M10,8.36C9.25,8.36,8.64,7.75,8.64,7S9.25,5.64,10,5.64S11.36,6.25,11.36,7S10.75,8.36,10,8.36z M10,6.36C9.647,6.36,9.36,6.647,9.36,7S9.647,7.64,10,7.64S10.64,7.353,10.64,7S10.353,6.36,10,6.36z" />
+            </svg>
             <h3>Four themes, one mechanism</h3>
             <p>Light, dark, a warm sepia<sup><a href="#fn-1" id="fnref-1"
                   data-footnote-ref>1</a></sup>, and a soft green
               mint<sup><a href="#fn-2" id="fnref-2"
                   data-footnote-ref>2</a></sup>, built on
               <code>color-scheme</code> and <code>light-dark()</code>. The
-              dark theme follows your system setting.</p>
+              dark theme follows your system setting.
+            </p>
           </article>
           <article>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,31.36C7.53,31.36,0.64,24.47,0.64,16	S7.53,0.64,16,0.64S31.36,7.53,31.36,16S24.47,31.36,16,31.36z M16,1.36C7.927,1.36,1.36,7.927,1.36,16	c0,8.072,6.567,14.64,14.64,14.64c8.072,0,14.64-6.567,14.64-14.64S24.072,1.36,16,1.36z M9.498,26.859	c-0.23,0-0.464-0.059-0.677-0.182c-0.649-0.375-0.873-1.208-0.499-1.857l5.318-9.167c0-0.504,0-2.883,0-3.795	c-0.96-0.001-3.71,0-5.64,0.002c-0.75,0-1.36-0.61-1.36-1.36S7.25,9.14,8,9.14h16c0.75,0,1.36,0.61,1.36,1.36s-0.61,1.36-1.36,1.36	h-5.64v3.793l5.317,9.166c0.374,0.65,0.151,1.484-0.498,1.858c-0.647,0.375-1.483,0.151-1.857-0.498l-4.55-7.874	c-0.323-0.559-1.223-0.558-1.545-0.001l-4.55,7.875C10.426,26.615,9.968,26.859,9.498,26.859z M11.114,11.137	c3.032,0,3.051,0.019,3.141,0.108c0.067,0.068,0.105,0.159,0.105,0.255c0,4.283,0,4.283-0.007,4.321	c-0.008,0.039-0.022,0.076-0.042,0.11l-5.366,9.25c-0.176,0.305-0.071,0.697,0.235,0.874c0.305,0.175,0.697,0.07,0.875-0.234	l4.55-7.875C14.896,17.44,15.417,17.14,16,17.14l0,0c0.582,0,1.104,0.301,1.396,0.805v0.001l4.55,7.875	c0.177,0.305,0.57,0.411,0.875,0.233c0.305-0.176,0.41-0.568,0.233-0.874l-5.365-9.249c-0.031-0.055-0.049-0.117-0.049-0.181V11.5	c0-0.199,0.161-0.36,0.36-0.36h6c0.353,0,0.64-0.287,0.64-0.64S24.353,9.86,24,9.86H8c-0.353,0-0.64,0.287-0.64,0.64	S7.647,11.14,8,11.14C9.29,11.138,10.308,11.137,11.114,11.137z M16,8.36c-1.301,0-2.36-1.059-2.36-2.36S14.699,3.64,16,3.64	c1.302,0,2.36,1.059,2.36,2.36S17.302,8.36,16,8.36z M16,4.36c-0.904,0-1.64,0.736-1.64,1.64S15.096,7.64,16,7.64	c0.904,0,1.64-0.736,1.64-1.64S16.904,4.36,16,4.36z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+              aria-hidden="true">
+              <path
+                d="M16,31.36C7.53,31.36,0.64,24.47,0.64,16	S7.53,0.64,16,0.64S31.36,7.53,31.36,16S24.47,31.36,16,31.36z M16,1.36C7.927,1.36,1.36,7.927,1.36,16	c0,8.072,6.567,14.64,14.64,14.64c8.072,0,14.64-6.567,14.64-14.64S24.072,1.36,16,1.36z M9.498,26.859	c-0.23,0-0.464-0.059-0.677-0.182c-0.649-0.375-0.873-1.208-0.499-1.857l5.318-9.167c0-0.504,0-2.883,0-3.795	c-0.96-0.001-3.71,0-5.64,0.002c-0.75,0-1.36-0.61-1.36-1.36S7.25,9.14,8,9.14h16c0.75,0,1.36,0.61,1.36,1.36s-0.61,1.36-1.36,1.36	h-5.64v3.793l5.317,9.166c0.374,0.65,0.151,1.484-0.498,1.858c-0.647,0.375-1.483,0.151-1.857-0.498l-4.55-7.874	c-0.323-0.559-1.223-0.558-1.545-0.001l-4.55,7.875C10.426,26.615,9.968,26.859,9.498,26.859z M11.114,11.137	c3.032,0,3.051,0.019,3.141,0.108c0.067,0.068,0.105,0.159,0.105,0.255c0,4.283,0,4.283-0.007,4.321	c-0.008,0.039-0.022,0.076-0.042,0.11l-5.366,9.25c-0.176,0.305-0.071,0.697,0.235,0.874c0.305,0.175,0.697,0.07,0.875-0.234	l4.55-7.875C14.896,17.44,15.417,17.14,16,17.14l0,0c0.582,0,1.104,0.301,1.396,0.805v0.001l4.55,7.875	c0.177,0.305,0.57,0.411,0.875,0.233c0.305-0.176,0.41-0.568,0.233-0.874l-5.365-9.249c-0.031-0.055-0.049-0.117-0.049-0.181V11.5	c0-0.199,0.161-0.36,0.36-0.36h6c0.353,0,0.64-0.287,0.64-0.64S24.353,9.86,24,9.86H8c-0.353,0-0.64,0.287-0.64,0.64	S7.647,11.14,8,11.14C9.29,11.138,10.308,11.137,11.114,11.137z M16,8.36c-1.301,0-2.36-1.059-2.36-2.36S14.699,3.64,16,3.64	c1.302,0,2.36,1.059,2.36,2.36S17.302,8.36,16,8.36z M16,4.36c-0.904,0-1.64,0.736-1.64,1.64S15.096,7.64,16,7.64	c0.904,0,1.64-0.736,1.64-1.64S16.904,4.36,16,4.36z" />
+            </svg>
             <h3>Accessible by measurement</h3>
             <p>Every palette is checked against WCAG AA, and body text
               targets AAA. Focus stays visible, code and tables scroll from
               the keyboard, and motion respects your system setting.</p>
           </article>
           <article>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M26.986,10l0.774-0.001l-2.437-6.133h-0.669L22.216,10h0.775l0.653-1.641h2.691L26.986,10z M23.929,7.639l1.06-2.666l1.059,2.666H23.929z M13,31.36H1c-0.199,0-0.36-0.161-0.36-0.36V19c0-0.199,0.161-0.36,0.36-0.36h12	c0.199,0,0.36,0.161,0.36,0.36v12C13.36,31.199,13.199,31.36,13,31.36z M1.36,30.64h11.28V19.36H1.36V30.64z M25,13.36	c-3.507,0-6.36-2.853-6.36-6.36S21.493,0.64,25,0.64S31.36,3.493,31.36,7S28.507,13.36,25,13.36z M25,1.36	c-3.11,0-5.64,2.53-5.64,5.64s2.529,5.64,5.64,5.64s5.64-2.53,5.64-5.64S28.11,1.36,25,1.36z M13.924,3.919l-0.509,0.509	l2.212,2.212H9c-1.301,0-2.36,1.059-2.36,2.361V17h0.72V9.001C7.36,8.096,8.096,7.36,9,7.36h6.631l-2.216,2.216l0.509,0.509	l3.083-3.083L13.924,3.919z M24.64,15.001v8c0,0.903-0.735,1.638-1.64,1.638h-6.63l2.212-2.212l-0.51-0.51l-3.083,3.084l3.083,3.083	l0.51-0.51l-2.216-2.215H23c1.302,0,2.36-1.059,2.36-2.358v-8C25.36,15.001,24.64,15.001,24.64,15.001z M10,23.36v-0.72H7.36V21.5	H6.64v1.14H4v0.721h3.993c-0.013,0.631-0.156,2.036-1.023,3.064c-0.65-0.619-1.066-1.368-1.202-1.999l-0.704,0.152	c0.152,0.702,0.612,1.599,1.373,2.345c-0.634,0.47-1.445,0.719-2.438,0.719v0.721c1.225,0,2.221-0.34,2.997-0.974	c0.773,0.568,1.763,0.974,3.003,0.974v-0.721c-0.985,0-1.808-0.314-2.469-0.767c1.013-1.212,1.173-2.798,1.184-3.514L10,23.36	L10,23.36z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+              aria-hidden="true">
+              <path
+                d="M26.986,10l0.774-0.001l-2.437-6.133h-0.669L22.216,10h0.775l0.653-1.641h2.691L26.986,10z M23.929,7.639l1.06-2.666l1.059,2.666H23.929z M13,31.36H1c-0.199,0-0.36-0.161-0.36-0.36V19c0-0.199,0.161-0.36,0.36-0.36h12	c0.199,0,0.36,0.161,0.36,0.36v12C13.36,31.199,13.199,31.36,13,31.36z M1.36,30.64h11.28V19.36H1.36V30.64z M25,13.36	c-3.507,0-6.36-2.853-6.36-6.36S21.493,0.64,25,0.64S31.36,3.493,31.36,7S28.507,13.36,25,13.36z M25,1.36	c-3.11,0-5.64,2.53-5.64,5.64s2.529,5.64,5.64,5.64s5.64-2.53,5.64-5.64S28.11,1.36,25,1.36z M13.924,3.919l-0.509,0.509	l2.212,2.212H9c-1.301,0-2.36,1.059-2.36,2.361V17h0.72V9.001C7.36,8.096,8.096,7.36,9,7.36h6.631l-2.216,2.216l0.509,0.509	l3.083-3.083L13.924,3.919z M24.64,15.001v8c0,0.903-0.735,1.638-1.64,1.638h-6.63l2.212-2.212l-0.51-0.51l-3.083,3.084l3.083,3.083	l0.51-0.51l-2.216-2.215H23c1.302,0,2.36-1.059,2.36-2.358v-8C25.36,15.001,24.64,15.001,24.64,15.001z M10,23.36v-0.72H7.36V21.5	H6.64v1.14H4v0.721h3.993c-0.013,0.631-0.156,2.036-1.023,3.064c-0.65-0.619-1.066-1.368-1.202-1.999l-0.704,0.152	c0.152,0.702,0.612,1.599,1.373,2.345c-0.634,0.47-1.445,0.719-2.438,0.719v0.721c1.225,0,2.221-0.34,2.997-0.974	c0.773,0.568,1.763,0.974,3.003,0.974v-0.721c-0.985,0-1.808-0.314-2.469-0.767c1.013-1.212,1.173-2.798,1.184-3.514L10,23.36	L10,23.36z" />
+            </svg>
             <h3>Right-to-left, by default</h3>
             <p>Logical properties throughout, an Arabic typeface, and
               spacing that mirrors cleanly. Set <code>dir="rtl"</code> and
@@ -315,10 +333,35 @@
         </div>
       </section>
 
+      <section id="start">
+        <h2>Getting started</h2>
+        <p>One file, one link. Add <code>rana.css</code> to your
+          <code>&lt;head&gt;</code>:
+        </p>
+        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/rana-css/rana.css"&gt;</code></pre>
+        <p>Install it from
+          <a href="https://www.npmjs.com/package/rana-css" target="_blank"
+            rel="noopener noreferrer">npm</a>:
+        </p>
+        <pre><code>npm install rana-css</code></pre>
+        <p>Or grab the latest release from
+          <a href="https://github.com/slmzayat/rana-css" target="_blank"
+            rel="noopener noreferrer">GitHub</a>, or
+          <a href="https://github.com/slmzayat/rana-css/blob/main/src/rana.css"
+            target="_blank" rel="noopener noreferrer">view the file</a>
+          directly.
+        </p>
+        <p>For Shiki, KaTeX, or GitHub-style alerts, link
+          <code>rana-integrations.css</code> after the core file. Step
+          through every styled element in the
+          <a href="demo/index.html">demo</a>, or read every custom property
+          in the <a href="demo/tokens.html">token reference</a>.
+        </p>
+      </section>
+
       <section>
         <h2>Made for reading</h2>
-        <p>Rana is set in <a
-            href="https://github.com/adobe-fonts/source-serif"
+        <p>Rana is set in <a href="https://github.com/adobe-fonts/source-serif"
             target="_blank" rel="noopener noreferrer">Source Serif
             4</a>, an open-source Adobe typeface built for long stretches of
           text. It comes from the same family as the sans-serif and
@@ -332,12 +375,14 @@
           figures that sit level with the letters around it. Emphasis is a
           <em>true italic</em>, drawn by the type designer rather than
           sloped by the browser. And a paragraph never leaves a single word
-          alone on its last line.</p>
+          alone on its last line.
+        </p>
         <p>The rest is styled the moment you write it: <a href="#">a
             link</a>, <strong>bold</strong>, <em>emphasis</em>, an
           <u>underline</u>, a little <mark>highlight</mark>,
           <code>inline code</code>, and keyboard keys such as
-          <kbd>Ctrl</kbd> and <kbd>C</kbd>.</p>
+          <kbd>Ctrl</kbd> and <kbd>C</kbd>.
+        </p>
       </section>
 
       <section>
@@ -347,7 +392,8 @@
           <dt><code>light-dark()</code></dt>
           <dd>Color variables flip between light and dark based on
             <code>color-scheme</code>. No JavaScript color-scheme
-            observer.</dd>
+            observer.
+          </dd>
           <dt><code>:has()</code></dt>
           <dd>Used to style form layouts, task lists, footnotes, and
             disclosure states without wrapper elements.</dd>
@@ -377,7 +423,8 @@
           <a href="https://shiki.style" target="_blank"
             rel="noopener noreferrer">Shiki</a> in your build step, and
           every fenced block is highlighted for light and dark.
-          Switch themes above to see it adapt.</p>
+          Switch themes above to see it adapt.
+        </p>
         <pre tabindex="0" class="shiki shiki-themes github-light github-dark"
           style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> readingTime</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">text</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">wordsPerMinute</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">238</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> words = text.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">trim</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">().</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">split</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">/\s+/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">).length;</span></span>
@@ -428,7 +475,8 @@
           The sepia and mint themes are built the same way, so there is
           always a working example to copy.</p>
         <p>Browse every overridable property in the
-          <a href="demo/tokens.html">token reference</a>.</p>
+          <a href="demo/tokens.html">token reference</a>.
+        </p>
       </section>
 
       <section>
@@ -482,35 +530,14 @@
         </div>
       </section>
 
-      <section id="start">
-        <h2>Getting started</h2>
-        <p>Via CDN, one line in your <code>&lt;head&gt;</code>:</p>
-        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/rana-css/rana.css"&gt;</code></pre>
-        <p>Or install from
-          <a href="https://www.npmjs.com/package/rana-css" target="_blank"
-            rel="noopener noreferrer">npm</a>:</p>
-        <pre><code>npm install rana-css</code></pre>
-        <p>To grab the core file directly,
-          <a href="src/rana.css" download>download rana.css</a> or clone
-          from <a href="https://github.com/slmzayat/rana-css" target="_blank"
-            rel="noopener noreferrer">GitHub</a>.</p>
-        <p>That covers plain HTML and Markdown output. For Shiki, KaTeX, or
-          GitHub-style alerts, add <code>rana-integrations.css</code> after
-          it.</p>
-        <p>See the <a href="demo/index.html">demo</a> to step through every
-          styled element, and the
-          <a href="demo/tokens.html">token reference</a> for every custom
-          property and its default value.</p>
-      </section>
-
       <section>
         <h2>Credits</h2>
         <dl>
           <dt>Typography</dt>
           <dd><a href="https://github.com/adobe-fonts/source-serif"
               target="_blank" rel="noopener noreferrer">Source Serif 4</a>,
-            <a href="https://github.com/adobe-fonts/source-sans"
-              target="_blank" rel="noopener noreferrer">Source Sans 3</a>,
+            <a href="https://github.com/adobe-fonts/source-sans" target="_blank"
+              rel="noopener noreferrer">Source Sans 3</a>,
             and
             <a href="https://github.com/adobe-fonts/source-code-pro"
               target="_blank" rel="noopener noreferrer">Source Code Pro</a>
@@ -522,17 +549,20 @@
               rel="noopener noreferrer">Bunny Fonts</a>. Fallback stacks
             from
             <a href="https://systemfontstack.com" target="_blank"
-              rel="noopener noreferrer">System Font Stack</a>.</dd>
+              rel="noopener noreferrer">System Font Stack</a>.
+          </dd>
           <dt>Typographic guidance</dt>
           <dd>Matthew Butterick's
             <a href="https://practicaltypography.com" target="_blank"
-              rel="noopener noreferrer">Practical Typography</a>.</dd>
+              rel="noopener noreferrer">Practical Typography</a>.
+          </dd>
           <dt>Color</dt>
           <dd>Light and dark palettes based on
             <a href="https://picocss.com" target="_blank"
               rel="noopener noreferrer">Pico CSS</a>; sepia is
             <a href="https://stephango.com/flexoki" target="_blank"
-              rel="noopener noreferrer">Flexoki</a> by Steph Ango.</dd>
+              rel="noopener noreferrer">Flexoki</a> by Steph Ango.
+          </dd>
           <dt>Interaction</dt>
           <dd>Easing curve after
             <a href="https://emilkowal.ski" target="_blank"
@@ -543,12 +573,14 @@
               Guidelines</a> and
             <a href="https://interfaces.rauno.me" target="_blank"
               rel="noopener noreferrer">Rauno Freiberg's
-              Interfaces</a>.</dd>
+              Interfaces</a>.
+          </dd>
           <dt>Pictograms</dt>
           <dd>IBM's
             <a href="https://carbondesignsystem.com/elements/pictograms/library/"
               target="_blank" rel="noopener noreferrer">Carbon Design
-              System</a> (Apache 2.0).</dd>
+              System</a> (Apache 2.0).
+          </dd>
           <dt>Built with</dt>
           <dd><a href="https://claude.com/claude-code" target="_blank"
               rel="noopener noreferrer">Claude Code</a> and Claude
@@ -559,17 +591,21 @@
       <section data-footnotes>
         <ol>
           <li id="fn-1">The sepia palette is
-            <a href="https://stephango.com/flexoki" target="_blank" rel="noopener noreferrer">Flexoki</a>, by Steph
+            <a href="https://stephango.com/flexoki" target="_blank"
+              rel="noopener noreferrer">Flexoki</a>, by Steph
             Ango. <a href="#fnref-1" data-footnote-backref
-              aria-label="Back to reference 1">↩</a></li>
+              aria-label="Back to reference 1">↩</a>
+          </li>
           <li id="fn-2">The eye resolves the most detail in green, peaking
             near 555 nm at the middle of the visible spectrum, so a soft
             green background stays clear while easing the glare of pure
             white. See
-            <a href="https://www.rp-photonics.com/luminosity_functions.html" target="_blank" rel="noopener noreferrer">RP
+            <a href="https://www.rp-photonics.com/luminosity_functions.html"
+              target="_blank" rel="noopener noreferrer">RP
               Photonics, Luminosity Functions</a>.
             <a href="#fnref-2" data-footnote-backref
-              aria-label="Back to reference 2">↩</a></li>
+              aria-label="Back to reference 2">↩</a>
+          </li>
         </ol>
       </section>
 

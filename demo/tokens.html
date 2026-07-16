@@ -55,15 +55,14 @@
         filter: none;
       }
 
-      body > header {
+      body>header {
         max-inline-size: 65ch;
         margin-inline: auto;
         padding-block-start: clamp(2rem, 6vh, 4rem);
-        padding-inline: max(1rem, env(safe-area-inset-left))
-          max(1rem, env(safe-area-inset-right));
+        padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right));
       }
 
-      body > header + main {
+      body>header+main {
         padding-block-start: 0;
       }
 
@@ -276,10 +275,9 @@
       <form aria-label="Theme preference">
         <fieldset>
           <legend>Theme</legend>
-          <input type="radio" value="auto" name="theme" id="theme-auto"
-            checked>
+          <input type="radio" value="auto" name="theme" id="theme-auto">
           <label for="theme-auto">Auto</label>
-          <input type="radio" value="gray" name="theme" id="theme-gray">
+          <input type="radio" value="gray" name="theme" id="theme-gray" checked>
           <label for="theme-gray">Light</label>
           <input type="radio" value="sepia" name="theme" id="theme-sepia">
           <label for="theme-sepia">Sepia</label>
@@ -296,7 +294,8 @@
         <a href="#motion">Motion</a>
         <a href="#other">Other</a>
       </nav>
-      <p style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-meta); margin-block-start: var(--space-2xs)">
+      <p
+        style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-meta); margin-block-start: var(--space-2xs)">
         <a href="index.html">Demo</a> ·
         <a href="../index.html">Marketing</a>
       </p>
@@ -309,24 +308,30 @@
         <p>All tokens use <code>light-dark()</code> and resolve with
           <code>color-scheme</code>. The <code>sepia</code> and
           <code>mint</code> named themes override a subset on
-          <code>:root[data-theme]</code>.</p>
+          <code>:root[data-theme]</code>.
+        </p>
 
         <h3>Surface</h3>
         <ul class="token-list" role="list">
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-bg)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-bg)"></span>
             <div>
               <span class="token-name">--color-bg</span>
               <span class="token-desc">Page background.</span>
-              <span class="token-val">light: #FFFFFF &middot; dark: #11191F</span>
+              <span class="token-val">light: #FFFFFF &middot; dark:
+                #11191F</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-code-bg)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-code-bg)"></span>
             <div>
               <span class="token-name">--color-code-bg</span>
-              <span class="token-desc">Background for code blocks and inline <code>code</code>.</span>
-              <span class="token-val">light: #F3F5F7 &middot; dark: #181C25</span>
+              <span class="token-desc">Background for code blocks and inline
+                <code>code</code>.</span>
+              <span class="token-val">light: #F3F5F7 &middot; dark:
+                #181C25</span>
             </div>
           </li>
         </ul>
@@ -334,27 +339,35 @@
         <h3>Ink</h3>
         <ul class="token-list" role="list">
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-heading)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-heading)"></span>
             <div>
               <span class="token-name">--color-heading</span>
               <span class="token-desc">Headings and strong emphasis.</span>
-              <span class="token-val">light: #181C25 &middot; dark: #F1F3F5</span>
+              <span class="token-val">light: #181C25 &middot; dark:
+                #F1F3F5</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-body)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-body)"></span>
             <div>
               <span class="token-name">--color-body</span>
               <span class="token-desc">Body paragraph text.</span>
-              <span class="token-val">light: #2B3440 &middot; dark: #C2C7D0</span>
+              <span class="token-val">light: #2B3440 &middot; dark:
+                #C2C7D0</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-meta)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-meta)"></span>
             <div>
               <span class="token-name">--color-meta</span>
-              <span class="token-desc">Captions, labels, footnotes, secondary text. Passes WCAG AAA (7:1) against <code>--color-bg</code>.</span>
-              <span class="token-val">light: #46596D &middot; dark: #9FA6B2</span>
+              <span class="token-desc">Captions, labels, footnotes, secondary
+                text. Passes WCAG AAA (7:1) against
+                <code>--color-bg</code>.</span>
+              <span class="token-val">light: #46596D &middot; dark:
+                #9FA6B2</span>
             </div>
           </li>
         </ul>
@@ -362,11 +375,14 @@
         <h3>Border</h3>
         <ul class="token-list" role="list">
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-border)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-border)"></span>
             <div>
               <span class="token-name">--color-border</span>
-              <span class="token-desc">Table rules, card and code block borders, fieldsets, scrollbar track.</span>
-              <span class="token-val">light: #E0E5EB &middot; dark: #2D3540</span>
+              <span class="token-desc">Table rules, card and code block borders,
+                fieldsets, scrollbar track.</span>
+              <span class="token-val">light: #E0E5EB &middot; dark:
+                #2D3540</span>
             </div>
           </li>
         </ul>
@@ -374,42 +390,56 @@
         <h3>Interactive</h3>
         <ul class="token-list" role="list">
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-link)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-link)"></span>
             <div>
               <span class="token-name">--color-link</span>
-              <span class="token-desc">Links, buttons, and accent elements. Passes WCAG AAA (7:1) against <code>--color-bg</code>.</span>
-              <span class="token-val">light: #015887 &middot; dark: #7AB4DF</span>
+              <span class="token-desc">Links, buttons, and accent elements.
+                Passes WCAG AAA (7:1) against <code>--color-bg</code>.</span>
+              <span class="token-val">light: #015887 &middot; dark:
+                #7AB4DF</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-link-hover)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-link-hover)"></span>
             <div>
               <span class="token-name">--color-link-hover</span>
               <span class="token-desc">Hovered links and buttons.</span>
-              <span class="token-val">light: #013F61 &middot; dark: #B2D3EC</span>
+              <span class="token-val">light: #013F61 &middot; dark:
+                #B2D3EC</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-focus-ring)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-focus-ring)"></span>
             <div>
               <span class="token-name">--color-focus-ring</span>
-              <span class="token-desc">Keyboard focus ring, a low-opacity tint of <code>--color-link</code>.</span>
-              <span class="token-val">light: rgba(1, 88, 135, 0.15) &middot; dark: rgba(122, 180, 223, 0.2)</span>
+              <span class="token-desc">Keyboard focus ring, a low-opacity tint
+                of <code>--color-link</code>.</span>
+              <span class="token-val">light: rgba(1, 88, 135, 0.15) &middot;
+                dark: rgba(122, 180, 223, 0.2)</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-ink-on-accent)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-ink-on-accent)"></span>
             <div>
               <span class="token-name">--color-ink-on-accent</span>
-              <span class="token-desc">Text on accent surfaces: buttons, file input button, checkbox checkmark.</span>
-              <span class="token-val">light: #FFFFFF &middot; dark: #11191F</span>
+              <span class="token-desc">Text on accent surfaces: buttons, file
+                input button, checkbox checkmark.</span>
+              <span class="token-val">light: #FFFFFF &middot; dark:
+                #11191F</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-selection)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-selection)"></span>
             <div>
               <span class="token-name">--color-selection</span>
-              <span class="token-desc">Text selection background, computed as <code>color-mix(--color-link 20%, --color-bg)</code>. Updates automatically with theme and link color.</span>
+              <span class="token-desc">Text selection background, computed as
+                <code>color-mix(--color-link 20%, --color-bg)</code>. Updates
+                automatically with theme and link color.</span>
             </div>
           </li>
         </ul>
@@ -417,19 +447,25 @@
         <h3>State</h3>
         <ul class="token-list" role="list">
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-error)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-error)"></span>
             <div>
               <span class="token-name">--color-error</span>
-              <span class="token-desc">Invalid form fields (<code>:user-invalid</code>), caution callouts.</span>
-              <span class="token-val">light: #CF222E &middot; dark: #F85149</span>
+              <span class="token-desc">Invalid form fields
+                (<code>:user-invalid</code>), caution callouts.</span>
+              <span class="token-val">light: #CF222E &middot; dark:
+                #F85149</span>
             </div>
           </li>
           <li class="token-row">
-            <span class="swatch" style="background-color: var(--color-success)"></span>
+            <span class="swatch"
+              style="background-color: var(--color-success)"></span>
             <div>
               <span class="token-name">--color-success</span>
-              <span class="token-desc">Valid form fields (<code>:user-valid</code>), tip callouts.</span>
-              <span class="token-val">light: #1A7F37 &middot; dark: #3FB950</span>
+              <span class="token-desc">Valid form fields
+                (<code>:user-valid</code>), tip callouts.</span>
+              <span class="token-val">light: #1A7F37 &middot; dark:
+                #3FB950</span>
             </div>
           </li>
         </ul>
@@ -441,40 +477,51 @@
           mono for code. Two weights only: 400 and 700.
           <code>h1</code> and <code>h2</code> are fluid
           (<code>clamp()</code>); <code>h3</code> through <code>h6</code>
-          are fixed.</p>
+          are fixed.
+        </p>
 
         <ul class="type-list" role="list">
           <li class="type-row">
             <h1 style="margin: 0">Heading 1</h1>
-            <span class="type-meta">clamp(1.625rem, 1.35rem + 1.2vw, 2rem) &middot; 26–32&nbsp;px &middot; serif 700</span>
+            <span class="type-meta">clamp(1.625rem, 1.35rem + 1.2vw, 2rem)
+              &middot; 26–32&nbsp;px &middot; serif 700</span>
           </li>
           <li class="type-row">
             <h2 style="margin: 0">Heading 2</h2>
-            <span class="type-meta">clamp(1.375rem, 1.2rem + 0.8vw, 1.625rem) &middot; 22–26&nbsp;px &middot; serif 700</span>
+            <span class="type-meta">clamp(1.375rem, 1.2rem + 0.8vw, 1.625rem)
+              &middot; 22–26&nbsp;px &middot; serif 700</span>
           </li>
           <li class="type-row">
             <h3 style="margin: 0">Heading 3</h3>
-            <span class="type-meta">1.25rem &middot; 20&nbsp;px &middot; sans 700</span>
+            <span class="type-meta">1.25rem &middot; 20&nbsp;px &middot; sans
+              700</span>
           </li>
           <li class="type-row">
             <h4 style="margin: 0">Heading 4</h4>
-            <span class="type-meta">1rem &middot; 16&nbsp;px &middot; sans 700</span>
+            <span class="type-meta">1rem &middot; 16&nbsp;px &middot; sans
+              700</span>
           </li>
           <li class="type-row">
             <h5 style="margin: 0">Heading 5</h5>
-            <span class="type-meta">0.875rem &middot; 14&nbsp;px &middot; sans 700</span>
+            <span class="type-meta">0.875rem &middot; 14&nbsp;px &middot; sans
+              700</span>
           </li>
           <li class="type-row">
             <h6 style="margin: 0">Heading 6</h6>
-            <span class="type-meta">0.8125rem &middot; 13&nbsp;px &middot; sans 700</span>
+            <span class="type-meta">0.8125rem &middot; 13&nbsp;px &middot; sans
+              700</span>
           </li>
           <li class="type-row">
             <p style="margin: 0">Body text</p>
-            <span class="type-meta">clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem) &middot; 17–19&nbsp;px &middot; serif 400</span>
+            <span class="type-meta">clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem)
+              &middot; 17–19&nbsp;px &middot; serif 400</span>
           </li>
           <li class="type-row">
-            <p style="margin: 0; font-family: var(--font-sans); font-size: 0.9375rem">Interface / label</p>
-            <span class="type-meta">0.9375rem &middot; 15&nbsp;px &middot; sans 400</span>
+            <p
+              style="margin: 0; font-family: var(--font-sans); font-size: 0.9375rem">
+              Interface / label</p>
+            <span class="type-meta">0.9375rem &middot; 15&nbsp;px &middot; sans
+              400</span>
           </li>
           <li class="type-row">
             <code>Inline code</code>
@@ -482,19 +529,26 @@
           </li>
           <li class="type-row">
             <kbd>Kbd</kbd>
-            <span class="type-meta">0.875em of parent &middot; mono 400 &middot; border</span>
+            <span class="type-meta">0.875em of parent &middot; mono 400 &middot;
+              border</span>
           </li>
           <li class="type-row">
-            <blockquote style="margin: 0; padding: 0; border: none; font-size: 1em">Blockquote</blockquote>
-            <span class="type-meta">body size &middot; serif 400 &middot; meta color &middot; left border</span>
+            <blockquote
+              style="margin: 0; padding: 0; border: none; font-size: 1em">
+              Blockquote</blockquote>
+            <span class="type-meta">body size &middot; serif 400 &middot; meta
+              color &middot; left border</span>
           </li>
           <li class="type-row">
-            <figcaption style="margin: 0; text-align: start">Figcaption / caption</figcaption>
-            <span class="type-meta">0.875rem &middot; 14&nbsp;px &middot; sans 400 &middot; meta color</span>
+            <figcaption style="margin: 0; text-align: start">Figcaption /
+              caption</figcaption>
+            <span class="type-meta">0.875rem &middot; 14&nbsp;px &middot; sans
+              400 &middot; meta color</span>
           </li>
           <li class="type-row">
             <p style="margin: 0"><mark>Highlighted text</mark></p>
-            <span class="type-meta">body size &middot; no weight change &middot; tinted background</span>
+            <span class="type-meta">body size &middot; no weight change &middot;
+              tinted background</span>
           </li>
         </ul>
 
@@ -503,42 +557,58 @@
           <li class="token-row no-swatch">
             <div>
               <span class="token-name">--font-serif</span>
-              <span class="token-desc">Reading voice. Used on <code>body</code>, <code>h1</code>, <code>h2</code>, <code>blockquote</code>.</span>
-              <span class="token-val">"Source Serif 4", "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", …, serif</span>
+              <span class="token-desc">Reading voice. Used on <code>body</code>,
+                <code>h1</code>, <code>h2</code>,
+                <code>blockquote</code>.</span>
+              <span class="token-val">"Source Serif 4", "Iowan Old Style",
+                "Apple Garamond", Baskerville, "Times New Roman", …,
+                serif</span>
             </div>
           </li>
           <li class="token-row no-swatch">
             <div>
               <span class="token-name">--font-sans</span>
-              <span class="token-desc">Structure voice. Used on <code>h3</code>–<code>h6</code>, tables, labels, captions, form controls.</span>
-              <span class="token-val">"Source Sans 3", -apple-system, BlinkMacSystemFont, "Avenir Next", …, sans-serif</span>
+              <span class="token-desc">Structure voice. Used on
+                <code>h3</code>–<code>h6</code>, tables, labels, captions, form
+                controls.</span>
+              <span class="token-val">"Source Sans 3", -apple-system,
+                BlinkMacSystemFont, "Avenir Next", …, sans-serif</span>
             </div>
           </li>
           <li class="token-row no-swatch">
             <div>
               <span class="token-name">--font-mono</span>
-              <span class="token-desc">Code voice. Used on <code>code</code>, <code>pre</code>, <code>kbd</code>.</span>
-              <span class="token-val">"Source Code Pro", Menlo, Consolas, Monaco, …, monospace</span>
+              <span class="token-desc">Code voice. Used on <code>code</code>,
+                <code>pre</code>, <code>kbd</code>.</span>
+              <span class="token-val">"Source Code Pro", Menlo, Consolas,
+                Monaco, …, monospace</span>
             </div>
           </li>
           <li class="token-row no-swatch">
             <div>
               <span class="token-name">--font-serif-latin</span>
-              <span class="token-desc">The Latin-only serif stack. Used as the base for <code>--font-serif</code> so that the <code>:lang(ar)</code> override can prepend Noto Sans Arabic without a cyclic custom property.</span>
-              <span class="token-val">Same value as <code>--font-serif</code></span>
+              <span class="token-desc">The Latin-only serif stack. Used as the
+                base for <code>--font-serif</code> so that the
+                <code>:lang(ar)</code> override can prepend Noto Sans Arabic
+                without a cyclic custom property.</span>
+              <span class="token-val">Same value as
+                <code>--font-serif</code></span>
             </div>
           </li>
           <li class="token-row no-swatch">
             <div>
               <span class="token-name">--font-sans-latin</span>
-              <span class="token-desc">The Latin-only sans stack. Used as the base for <code>--font-sans</code> for the same reason.</span>
-              <span class="token-val">Same value as <code>--font-sans</code></span>
+              <span class="token-desc">The Latin-only sans stack. Used as the
+                base for <code>--font-sans</code> for the same reason.</span>
+              <span class="token-val">Same value as
+                <code>--font-sans</code></span>
             </div>
           </li>
         </ul>
         <p>For Arabic content (<code>lang="ar"</code>), both
           <code>--font-serif</code> and <code>--font-sans</code> resolve
-          to Noto Sans Arabic prepended to the Latin stacks.</p>
+          to Noto Sans Arabic prepended to the Latin stacks.
+        </p>
       </section>
 
       <section id="spacing">
@@ -549,39 +619,48 @@
         <ul class="space-list" role="list">
           <li class="space-row" style="--size: var(--space-3xs)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-3xs<small>0.25rem &middot; 4&nbsp;px</small></span>
+            <span class="space-label">--space-3xs<small>0.25rem &middot;
+                4&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-2xs)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-2xs<small>0.5rem &middot; 8&nbsp;px</small></span>
+            <span class="space-label">--space-2xs<small>0.5rem &middot;
+                8&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-xs)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-xs<small>0.75rem &middot; 12&nbsp;px</small></span>
+            <span class="space-label">--space-xs<small>0.75rem &middot;
+                12&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-s)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-s<small>1rem &middot; 16&nbsp;px</small></span>
+            <span class="space-label">--space-s<small>1rem &middot;
+                16&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-m)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-m<small>1.5rem &middot; 24&nbsp;px</small></span>
+            <span class="space-label">--space-m<small>1.5rem &middot;
+                24&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-l)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-l<small>2rem &middot; 32&nbsp;px</small></span>
+            <span class="space-label">--space-l<small>2rem &middot;
+                32&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-xl)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-xl<small>2.5rem &middot; 40&nbsp;px</small></span>
+            <span class="space-label">--space-xl<small>2.5rem &middot;
+                40&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-2xl)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-2xl<small>3rem &middot; 48&nbsp;px</small></span>
+            <span class="space-label">--space-2xl<small>3rem &middot;
+                48&nbsp;px</small></span>
           </li>
           <li class="space-row" style="--size: var(--space-3xl)">
             <div class="space-bar"></div>
-            <span class="space-label">--space-3xl<small>4rem &middot; 64&nbsp;px</small></span>
+            <span class="space-label">--space-3xl<small>4rem &middot;
+                64&nbsp;px</small></span>
           </li>
         </ul>
       </section>
@@ -590,21 +669,24 @@
         <h2>Motion</h2>
         <p>All transitions and animations are suspended under
           <code>prefers-reduced-motion: reduce</code>. Hover the boxes
-          below to see the easing curves.</p>
+          below to see the easing curves.
+        </p>
 
         <h3>Duration</h3>
         <ul class="token-list" role="list">
           <li class="token-row no-swatch">
             <div>
               <span class="token-name">--duration-fast</span>
-              <span class="token-desc">Button presses, checkmark draws, quick state changes.</span>
+              <span class="token-desc">Button presses, checkmark draws, quick
+                state changes.</span>
               <span class="token-val">150ms</span>
             </div>
           </li>
           <li class="token-row no-swatch">
             <div>
               <span class="token-name">--duration-medium</span>
-              <span class="token-desc">Theme cross-fade, disclosure panel expand and collapse.</span>
+              <span class="token-desc">Theme cross-fade, disclosure panel expand
+                and collapse.</span>
               <span class="token-val">250ms</span>
             </div>
           </li>
@@ -616,7 +698,9 @@
             <div class="ease-box out-strong" aria-hidden="true"></div>
             <div>
               <span class="token-name">--ease-out-strong</span>
-              <span class="token-desc">Entering elements: checkbox checkmark, button press scale, image hover-lift. Fast start, smooth settle.</span>
+              <span class="token-desc">Entering elements: checkbox checkmark,
+                button press scale, image hover-lift. Fast start, smooth
+                settle.</span>
               <span class="token-val">cubic-bezier(0.23, 1, 0.32, 1)</span>
             </div>
           </li>
@@ -624,7 +708,8 @@
             <div class="ease-box in-out" aria-hidden="true"></div>
             <div>
               <span class="token-name">--ease-in-out</span>
-              <span class="token-desc">On-screen morphs: disclosure panel slide, summary marker rotation.</span>
+              <span class="token-desc">On-screen morphs: disclosure panel slide,
+                summary marker rotation.</span>
               <span class="token-val">cubic-bezier(0.77, 0, 0.175, 1)</span>
             </div>
           </li>
@@ -656,32 +741,41 @@
           completeness.</p>
         <ul class="misc-list" role="list">
           <li class="misc-row">
-            <span class="token-name" style="font-family: var(--font-sans)">Column measure</span>
-            <span>65&nbsp;ch — <code>max-inline-size</code> on <code>main</code> and <code>article</code>.</span>
+            <span class="token-name"
+              style="font-family: var(--font-sans)">Column measure</span>
+            <span>65&nbsp;ch — <code>max-inline-size</code> on <code>main</code>
+              and <code>article</code>.</span>
           </li>
           <li class="misc-row">
-            <span class="token-name" style="font-family: var(--font-sans)">Body line-height</span>
+            <span class="token-name" style="font-family: var(--font-sans)">Body
+              line-height</span>
             <span>1.6 — body text and blockquote.</span>
           </li>
           <li class="misc-row">
-            <span class="token-name" style="font-family: var(--font-sans)">h1 line-height</span>
+            <span class="token-name" style="font-family: var(--font-sans)">h1
+              line-height</span>
             <span>1.25 &middot; letter-spacing: -0.02em</span>
           </li>
           <li class="misc-row">
-            <span class="token-name" style="font-family: var(--font-sans)">h2 line-height</span>
+            <span class="token-name" style="font-family: var(--font-sans)">h2
+              line-height</span>
             <span>1.3 &middot; letter-spacing: -0.01em</span>
           </li>
           <li class="misc-row">
-            <span class="token-name" style="font-family: var(--font-sans)">h3 line-height</span>
+            <span class="token-name" style="font-family: var(--font-sans)">h3
+              line-height</span>
             <span>1.4</span>
           </li>
           <li class="misc-row">
-            <span class="token-name" style="font-family: var(--font-sans)">h4 line-height</span>
+            <span class="token-name" style="font-family: var(--font-sans)">h4
+              line-height</span>
             <span>1.45</span>
           </li>
           <li class="misc-row">
-            <span class="token-name" style="font-family: var(--font-sans)">h5 / h6 line-height</span>
-            <span>1.5 &middot; letter-spacing: 0.06em &middot; text-transform: uppercase</span>
+            <span class="token-name" style="font-family: var(--font-sans)">h5 /
+              h6 line-height</span>
+            <span>1.5 &middot; letter-spacing: 0.06em &middot; text-transform:
+              uppercase</span>
           </li>
         </ul>
       </section>

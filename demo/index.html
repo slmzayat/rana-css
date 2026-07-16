@@ -107,10 +107,10 @@
       <form aria-label="Appearance settings">
         <fieldset>
           <legend>Theme preference</legend>
-          <input type="radio" value="auto" name="theme" id="theme-auto" checked>
+          <input type="radio" value="auto" name="theme" id="theme-auto">
           <label for="theme-auto">Auto</label>
 
-          <input type="radio" value="gray" name="theme" id="theme-gray">
+          <input type="radio" value="gray" name="theme" id="theme-gray" checked>
           <label for="theme-gray">Light</label>
 
           <input type="radio" value="sepia" name="theme" id="theme-sepia">
@@ -123,7 +123,8 @@
           <label for="theme-dark">Dark</label>
         </fieldset>
       </form>
-      <p style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-meta); margin-block-start: var(--space-m)">
+      <p
+        style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-meta); margin-block-start: var(--space-m)">
         <a href="tokens.html">Token reference</a> ·
         <a href="../index.html">Marketing page</a>
       </p>
@@ -201,11 +202,13 @@
         <p><strong>Inline SVG:</strong> a hand-drawn star
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"
             style="display:inline;vertical-align:-0.15em">
-            <path d="M8 1l2 4.5 5 .6-3.6 3.4.9 4.9L8 12l-4.3 2.4.9-4.9L1 6.1l5-.6z"
+            <path
+              d="M8 1l2 4.5 5 .6-3.6 3.4.9 4.9L8 12l-4.3 2.4.9-4.9L1 6.1l5-.6z"
               fill="none" stroke="currentColor" stroke-width="1"></path>
           </svg>
           sits inline like a character, sized in the markup rather than
-          stretched to fill the column the way a standalone image would.</p>
+          stretched to fill the column the way a standalone image would.
+        </p>
 
         <h2>Links</h2>
         <p>A link looks like <a href="#">this: colored, with a quiet
@@ -405,7 +408,8 @@
           beneath them, rows get light ones, and the digits line up in tidy
           columns:</p>
         <table>
-          <caption>Five bodies in the solar system, ordered by distance from the sun</caption>
+          <caption>Five bodies in the solar system, ordered by distance from the
+            sun</caption>
           <thead>
             <tr>
               <th>Celestial body</th>
