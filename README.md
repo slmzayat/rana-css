@@ -123,5 +123,3 @@ disclosures instead of animated ones.
 
 [MIT](LICENSE).
 =======
-# rana-css
-CSS for calm, long-form reading
