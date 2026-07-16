@@ -1,5 +1,8 @@
 # Rana
 
+[![npm](https://img.shields.io/npm/v/rana-css.svg)](https://www.npmjs.com/package/rana-css)
+[![license](https://img.shields.io/npm/l/rana-css.svg)](LICENSE)
+
 Rana styles plain HTML and Markdown output for calm, long-form reading.
 Link one stylesheet, and paragraphs, headings, tables, and code blocks
 already look considered. No utility classes to learn, no build step,
@@ -7,7 +10,20 @@ no JavaScript.
 
 **[Site](https://slmzayat.github.io/rana-css/)** ·
 **[Demo](https://slmzayat.github.io/rana-css/demo/)** ·
-**[Token reference](https://slmzayat.github.io/rana-css/demo/tokens.html)**
+**[Token reference](https://slmzayat.github.io/rana-css/demo/tokens.html)** ·
+**[npm](https://www.npmjs.com/package/rana-css)**
+
+## Install
+
+```sh
+npm install rana-css
+```
+
+Or link the CDN copy in your `<head>`:
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/rana-css/rana.css">
+```
 
 Most classless CSS frameworks trace back to a browser landscape from
 before `light-dark()`, `:has()`, and native CSS nesting existed. Rana
