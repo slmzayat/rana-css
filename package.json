@@ -8,6 +8,7 @@
     "url": "git+https://github.com/slmzayat/rana-css.git"
   },
   "homepage": "https://slmzayat.github.io/rana-css/",
+  "author": "slmzayat",
   "bugs": "https://github.com/slmzayat/rana-css/issues",
   "style": "src/rana.css",
   "exports": {
@@ -15,7 +16,21 @@
     "./rana.css": "./src/rana.css",
     "./rana-integrations.css": "./src/rana-integrations.css"
   },
-  "files": ["src/rana.css", "src/rana-integrations.css", "REQUIREMENTS.md"],
-  "keywords": ["css", "framework", "typography", "markdown", "gfm", "reading", "no-class", "dark-mode", "rtl"],
+  "files": [
+    "src/rana.css",
+    "src/rana-integrations.css",
+    "REQUIREMENTS.md"
+  ],
+  "keywords": [
+    "css",
+    "framework",
+    "typography",
+    "markdown",
+    "gfm",
+    "reading",
+    "no-class",
+    "dark-mode",
+    "rtl"
+  ],
   "sideEffects": true
 }
