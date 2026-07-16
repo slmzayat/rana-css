@@ -1,20 +1,8 @@
-/* ==========================================================================
-   RANA-INTEGRATIONS.CSS — Renderer-specific overlay for rana.css
-   Import AFTER rana.css. Safe to omit outside Astro/rehype/KaTeX pipelines.
-
-   Couplings:
-   1. Shiki dual themes  — requires shikiConfig.themes in astro.config.mjs
-   2. Heading anchors    — requires rehype-autolink-headings with
-                           className: ['heading-link'] (see REQUIREMENTS.md)
-   3. KaTeX display math — requires remark-math + rehype-katex
-   ========================================================================== */
-
-/* 1. Shiki Code Blocks (Astro) ------------------------------------------- */
-/* Inherit rana.css pre styling for Shiki's wrapper */
 .astro-code, .shiki {
-  /* Panel surface follows the active theme (light, sepia, or dark) while
-     token colors come from Shiki. !important beats Shiki's inline style. */
-  background-color: var(--color-code-bg) !important;
+  /* Use the syntax theme's own background, not --color-code-bg: its token
+     colors are tuned for that background, so this keeps them at AA on every
+     Rana theme. !important beats Shiki's inline style. */
+  background-color: var(--shiki-light-bg, var(--color-code-bg)) !important;
   font-family: var(--font-mono);
   font-size: 0.875em;
   font-weight: var(--weight-regular);
@@ -23,6 +11,10 @@
   overflow-x: auto;
   line-height: 1.6;
   border: 1px solid var(--color-border);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--shiki-dark-bg, var(--color-code-bg)) !important;
+  }
 
   &:focus-visible {
     outline: 2px solid var(--color-link);
@@ -36,11 +28,8 @@
     border-radius: 0;
   }
 
-  /* Shiki dual-theme token switch. Generate with defaultColor: false so
-     both palettes arrive as CSS variables on each token; the cascade then
-     owns the choice. !important beats Shiki's inline style="" declarations.
-     A manual theme switcher overrides these with a higher-specificity rule
-     (see the test suite). */
+  /* Requires defaultColor: false in shikiConfig so both palettes land as
+     variables on each token; !important beats Shiki's inline styles */
   span {
     color: var(--shiki-light) !important;
 
@@ -50,7 +39,6 @@
   }
 }
 
-/* 2. Heading Anchor Links (rehype-autolink-headings) --------------------- */
 a.heading-link {
   opacity: 0;
   margin-inline-start: 0.5em;
@@ -69,18 +57,12 @@ a.heading-link:focus-visible {
   opacity: 1;
 }
 
-/* 3. KaTeX Display Math --------------------------------------------------- */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
   padding-block: 0.5rem;
 }
 
-/* 4. GFM Alerts (rehype-github-alerts) ------------------------------------ */
-/* Markdown: > [!NOTE] etc. Requires the alerts plugin in the unified
-   pipeline; without it, alerts remain plain blockquotes (still legible).
-   Colors are light-dark() pairs, so every theme — including any custom
-   light palette such as Flexoki sepia — resolves them natively. */
 .markdown-alert {
   --alert-color: var(--color-meta);
   margin-block: var(--space-l);
@@ -106,8 +88,22 @@ a.heading-link:focus-visible {
   color: var(--alert-color);
 }
 
+:lang(ar) .markdown-alert-title {
+  letter-spacing: normal;
+}
+
 .markdown-alert-note      { --alert-color: light-dark(#0969DA, #4493F8); }
 .markdown-alert-tip       { --alert-color: light-dark(#1A7F37, #3FB950); }
 .markdown-alert-important { --alert-color: light-dark(#8250DF, #AB7DF8); }
 .markdown-alert-warning   { --alert-color: light-dark(#9A6700, #D29922); }
 .markdown-alert-caution   { --alert-color: light-dark(#CF222E, #F85149); }
+
+/* Alerts and code carry meaning through color; keep it on paper instead
+   of forcing black like rana.css's print reset does for body text */
+@media print {
+  .astro-code, .shiki,
+  .markdown-alert {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

@@ -1,10 +1,21 @@
 {
   "name": "rana-css",
   "version": "1.0.0",
-  "description": "Rana — a CSS framework for calm, long-form reading. Styles default HTML and Markdown/GFM output; no utility classes, no JavaScript.",
+  "description": "Rana, a CSS framework for calm, long-form reading. Styles default HTML and Markdown/GFM output; no utility classes, no JavaScript.",
   "license": "MIT",
-  "style": "rana.css",
-  "files": ["rana.css", "rana-integrations.css", "README.md", "REQUIREMENTS.md"],
-  "keywords": ["css", "framework", "typography", "markdown", "gfm", "reading", "no-class", "dark-mode"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slmzayat/rana-css.git"
+  },
+  "homepage": "https://slmzayat.github.io/rana-css/",
+  "bugs": "https://github.com/slmzayat/rana-css/issues",
+  "style": "src/rana.css",
+  "exports": {
+    ".": "./src/rana.css",
+    "./rana.css": "./src/rana.css",
+    "./rana-integrations.css": "./src/rana-integrations.css"
+  },
+  "files": ["src/rana.css", "src/rana-integrations.css", "REQUIREMENTS.md"],
+  "keywords": ["css", "framework", "typography", "markdown", "gfm", "reading", "no-class", "dark-mode", "rtl"],
   "sideEffects": true
 }

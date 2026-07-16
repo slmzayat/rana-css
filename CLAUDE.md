@@ -16,10 +16,12 @@ plain CSS shipped as-is.
 
 - The only verification loop is visual: open `demo/index.html` directly in
   a browser (no server needed) and check it against every theme
-  (`light`, `dark`, `sepia`) after any change to `src/rana.css` or
+  (`light`, `dark`, `sepia`, `mint`) after any change to `src/rana.css` or
   `src/rana-integrations.css`. Treat the demo as the regression suite.
-- Astro is not installed in this repo; `astro.config.mjs` is reference
-  configuration for consumers, not something you run here.
+  For changes touching spacing, alignment, or fonts, also check RTL by
+  setting `dir="rtl" lang="ar"` on the demo's `<html>` element.
+- Astro is not installed in this repo; `examples/astro.config.mjs` is
+  reference configuration for consumers, not something you run here.
 
 ## Hard rules
 - Pure native CSS only. No JavaScript, no preprocessors, no utility classes.
@@ -40,7 +42,7 @@ plain CSS shipped as-is.
   fields use :focus (not :focus-visible) deliberately.
 - Contrast standard: WCAG AA minimum, target AAA contrast (SC 1.4.6,
   7:1 for normal text). Check every color change against all themes:
-  light, dark, and sepia. <!-- If AA-only was chosen, edit this line. -->
+  light, dark, sepia, and mint. <!-- If AA-only was chosen, edit this line. -->
 - Browser floor: mid-2026 evergreen (current Chrome, Firefox, and Safari
   on iOS) — light-dark(), :has(), color-mix(), native CSS nesting
   (relaxed syntax, nested at-rules). Do not add legacy fallbacks; do not
@@ -54,14 +56,31 @@ plain CSS shipped as-is.
   reintroduce legacy class fallbacks (`.footnotes`, `.contains-task-list`)
   — they were carried for one era and deliberately deleted once the
   `:has()`/`light-dark()` floor made them redundant.
+- RTL support is a property of never using physical values, not a
+  separate feature. Logical properties only (`margin-inline`,
+  `inset-inline-start`, `text-align: start`, never `left`/`right`).
+  `env(safe-area-inset-*)` is physical and needs an explicit
+  `:dir(rtl)` swap wherever it meets a logical property. Non-zero
+  `letter-spacing` breaks Arabic glyph joining; any new tracked/label
+  style needs a `:lang(ar)` reset alongside it.
 
 ## Structure
 - src/rana.css — the framework (no renderer classes as primary hooks;
   GFM data attributes and :has() only)
 - src/rana-integrations.css — optional overlay: Shiki, GFM alerts,
   KaTeX, heading anchors. Imported after rana.css.
+- index.html — the marketing page (root, so GitHub Pages serves it).
+  Zero-JS like the demo; page-level styles and theme wiring live in its
+  inline <style>. Inline SVG pictograms are from IBM Carbon (Apache
+  2.0), fills driven by --color-link. Update its size claims when the
+  CSS changes materially.
 - demo/index.html — test suite and living documentation. Reload it in a
   browser after every change; it is the visual regression suite.
+- demo/tokens.html — token reference: every custom property in rana.css
+  with live color swatches, the type scale, spacing bars, and motion
+  tokens. Color swatches resolve live via CSS vars; hardcoded values
+  (hex, rem, ms) must be kept in sync with rana.css manually when tokens
+  change.
 - REQUIREMENTS.md — pipeline hooks (pre tabindex, autolink config,
   Shiki dual themes), known trade-offs (table display:block semantics,
   theme-switch behavior), browser floor.
@@ -69,12 +88,15 @@ plain CSS shipped as-is.
   65ch, why the heading scale is 32/26/20/16/14/13, why sepia is Flexoki
   not a hand-rolled palette, rejected alternatives). CLAUDE.md holds the
   rules; this file holds the why. Check it before changing a value that
-  looks arbitrary — it probably isn't. Newest entry supersedes older ones
+  looks arbitrary: it probably isn't. Newest entry supersedes older ones
   it contradicts.
-- astro.config.mjs — reference Astro setup, pinned to the unified
-  pipeline (valid Astro 6 and 7; do not switch to Sätteri without
-  reworking the three pipeline hooks). Astro itself is not installed in
-  this repo; this file is documentation for consumers.
+- docs/backlog.md: candidate additions and fixes, not yet implemented.
+  Check it before starting new work; an idea may already be scoped
+  there.
+- examples/astro.config.mjs — reference Astro setup, pinned to the
+  unified pipeline (valid Astro 6 and 7; do not switch to Sätteri
+  without reworking the three pipeline hooks). Astro itself is not
+  installed in this repo; this file is documentation for consumers.
 
 ## Copy conventions (demo and docs)
 - Plain language, active voice, name each Markdown element.

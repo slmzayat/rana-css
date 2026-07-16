@@ -5,9 +5,9 @@
 // does NOT run remark/rehype plugins. This config explicitly pins the
 // unified pipeline via @astrojs/markdown-remark so the framework's three
 // pipeline hooks keep working unchanged:
-//   1. rehype-autolink-headings  -> a.heading-link (rana-rana-integrations.css)
+//   1. rehype-autolink-headings  -> a.heading-link (rana-integrations.css)
 //   2. tabindex="0" on <pre>     -> pre:focus-visible (rana.css)
-//   3. Shiki dual themes         -> --shiki-dark hook (rana-rana-integrations.css)
+//   3. Shiki dual themes         -> --shiki-dark hook (rana-integrations.css)
 //
 // On Astro 6, `processor: unified(...)` matches the default behavior, so
 // this config is a no-op change there.
@@ -44,6 +44,10 @@ export default defineConfig({
           light: 'github-light',
           dark: 'github-dark',
         },
+        // Required by rana-integrations.css: with a default color, tokens
+        // carry an inline `color` that beats the --shiki-light/--shiki-dark
+        // variable switch.
+        defaultColor: false,
       },
       rehypePlugins: [
         rehypeSlug, // required before autolink: generates the heading ids

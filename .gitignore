@@ -1,0 +1,18 @@
+# Dependencies (none expected; guards accidental installs)
+node_modules/
+
+# Logs
+*.log
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local scratch
+.claude/

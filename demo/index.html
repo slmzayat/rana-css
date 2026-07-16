@@ -11,13 +11,6 @@
     <link rel="stylesheet" href="../src/rana.css">
     <link rel="stylesheet" href="../src/rana-integrations.css">
     <style>
-      /* ------------------------------------------------------------------
-         Zero-JS theme switcher (page-level, not part of rana.css).
-         rana.css defines every color token with light-dark(), so a scheme
-         switch is just: change color-scheme. :has() reads the radio state
-         from the root. "Auto" (default) sets nothing, leaving the framework
-         to follow prefers-color-scheme natively.
-         ------------------------------------------------------------------ */
       :root:has(#theme-gray:checked) {
         color-scheme: light;
       }
@@ -26,85 +19,62 @@
         color-scheme: dark;
       }
 
-      /* Sepia lives in rana.css as [data-theme="sepia"]. A zero-JS page
-         cannot set that attribute from a radio, so this shim forwards the
-         radio state to the same palette. Real sites: just set
-         <html data-theme="sepia"> and delete this. */
       :root:has(#theme-sepia:checked) {
         color-scheme: light;
         --color-bg: #FFFCF0;
         --color-heading: #100F0F;
         --color-body: #100F0F;
-        --color-meta: #6F6E69;
+        --color-meta: #565552;
         --color-border: #E6E4D9;
         --color-code-bg: #F2F0E5;
-        --color-link: #205EA6;
-        --color-link-hover: #1A4F8C;
-        --color-focus-ring: rgba(32, 94, 166, 0.18);
+        --color-link: #1A4F8C;
+        --color-link-hover: #154071;
+        --color-focus-ring: rgba(26, 79, 140, 0.18);
       }
 
-      /* Back-to-top: a plain anchor to #top, fixed to the corner.
-         Native smooth scroll from rana.css does the travel. */
-      a.back-to-top {
-        position: fixed;
-        inset-block-end: max(1rem, env(safe-area-inset-bottom));
-        inset-inline-end: max(1rem, env(safe-area-inset-right));
-        inline-size: 2.75rem;
-        block-size: 2.75rem;
-        display: grid;
-        place-items: center;
-        font-family: var(--font-sans);
-        font-size: 1.25rem;
-        line-height: 1;
-        text-decoration: none;
-        color: var(--color-meta);
-        background-color: var(--color-code-bg);
-        border: 1px solid var(--color-border);
-        border-radius: 50%;
-        transition: color var(--duration-fast) var(--ease-out-strong),
-          border-color var(--duration-fast) var(--ease-out-strong),
-          transform var(--duration-press) var(--ease-out-strong);
+      :root:has(#theme-mint:checked) {
+        color-scheme: light;
+        --color-bg: #C5E7CE;
+        --color-heading: #121E15;
+        --color-body: #121E15;
+        --color-meta: #384841;
+        --color-border: #99C7A4;
+        --color-code-bg: #D4EEDB;
+        --color-link: #0B4C45;
+        --color-link-hover: #083934;
+        --color-focus-ring: rgba(11, 76, 69, 0.18);
       }
 
-      @media (hover: hover) and (pointer: fine) {
-        a.back-to-top:hover {
-          color: var(--color-link);
-          border-color: var(--color-link);
-        }
-      }
-
-      a.back-to-top:active {
-        transform: scale(0.94);
-      }
-
-      a.back-to-top:focus-visible {
-        outline: 2px solid var(--color-link);
-        outline-offset: 2px;
-      }
-
-      /* Replicate rana.css's non-color dark adjustments (filters/shadows
-         can't use light-dark()) and neutralize them when a light theme is
-         forced while the OS is dark. */
       :root:has(#theme-dark:checked) img:not([src*=".svg"]) {
         filter: brightness(0.85) contrast(1.1);
       }
 
       :root:has(#theme-gray:checked) img,
-      :root:has(#theme-sepia:checked) img {
+      :root:has(#theme-sepia:checked) img,
+      :root:has(#theme-mint:checked) img {
         filter: none;
       }
 
-      /* Shiki tokens follow the chosen theme, overriding the OS default */
+      :root:has(#theme-gray:checked) .shiki,
+      :root:has(#theme-sepia:checked) .shiki,
+      :root:has(#theme-mint:checked) .shiki {
+        background-color: var(--shiki-light-bg) !important;
+      }
+
       :root:has(#theme-gray:checked) .shiki span,
-      :root:has(#theme-sepia:checked) .shiki span {
+      :root:has(#theme-sepia:checked) .shiki span,
+      :root:has(#theme-mint:checked) .shiki span {
         color: var(--shiki-light) !important;
+      }
+
+      :root:has(#theme-dark:checked) .shiki {
+        background-color: var(--shiki-dark-bg) !important;
       }
 
       :root:has(#theme-dark:checked) .shiki span {
         color: var(--shiki-dark) !important;
       }
 
-      /* Align the page header with rana.css's reading column */
       body>header {
         max-inline-size: 65ch;
         margin-inline: auto;
@@ -114,13 +84,6 @@
 
       body>header+main {
         padding-block-start: 0;
-      }
-
-      /* Keep the switcher itself tidy: radios inline with their labels */
-      fieldset {
-        border: 1px solid var(--color-border);
-        border-radius: 4px;
-        padding: 0.75rem 1rem;
       }
 
       fieldset label {
@@ -135,12 +98,11 @@
   <body>
     <header id="top">
       <h1>Rana, put to work</h1>
-      <p>This page is a proving ground. It walks through everything Markdown
-        can produce: headings, paragraphs, lists, quotes, tables, code, and
-        more. Read on and see how the stylesheet treats each one. If
-        something looks wrong here, it will look wrong in a real article.
-        Read it top to bottom, or jump around; every section stands on its
-        own.</p>
+      <p>This page shows everything Markdown can produce: headings,
+        paragraphs, lists, quotes, tables, code, and more. Read on and see
+        how the stylesheet treats each one. If something looks wrong here,
+        it will look wrong in a real article. Read it top to bottom, or
+        jump around; every section stands on its own.</p>
 
       <form aria-label="Appearance settings">
         <fieldset>
@@ -154,36 +116,43 @@
           <input type="radio" value="sepia" name="theme" id="theme-sepia">
           <label for="theme-sepia">Sepia</label>
 
+          <input type="radio" value="mint" name="theme" id="theme-mint">
+          <label for="theme-mint">Mint</label>
+
           <input type="radio" value="dark" name="theme" id="theme-dark">
           <label for="theme-dark">Dark</label>
         </fieldset>
       </form>
+      <p style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-meta); margin-block-start: var(--space-m)">
+        <a href="tokens.html">Token reference</a> ·
+        <a href="../index.html">Marketing page</a>
+      </p>
     </header>
 
     <main>
       <article>
         <h2>Headings</h2>
         <p>Markdown gives you six heading levels. Use one <code>#</code> for the
-          biggest, six for the smallest. The top two keep the serif voice of
+          biggest, six for the smallest. The top two keep the same serif as
           the body text. From level three down, headings switch to a plainer
-          typeface, and the two smallest wear capital letters so they read as
-          labels rather than titles. Watch how the space above each heading
-          shrinks as the levels descend:</p>
+          typeface, and the two smallest use capital letters so they read as
+          labels rather than titles. The space above each heading shrinks as
+          the levels descend:</p>
         <h1>Heading one: the article title</h1>
         <h2>Heading two: a major section</h2>
         <h3>Heading three: a subsection</h3>
         <h4>Heading four: a topic within it</h4>
         <h5>Heading five: a small label</h5>
-        <h6>Heading six: the quietest label</h6>
+        <h6>Heading six: the smallest label</h6>
         <p>Notice the pair above: when one heading follows another with no
           text between them, the gap closes so they read as a unit, the way a
           title and subtitle should.</p>
 
         <h2>Paragraphs</h2>
-        <p>The paragraph carries the whole design. Each line holds about
-          sixty-five characters, roughly the width your eye can sweep and
+        <p>Paragraphs do most of the work on a reading page. Each line
+          holds about sixty-five characters, a width your eye can scan and
           return from without losing its place. Here is Thoreau, from
-          <cite>Walden</cite>, doing what long-form prose does:
+          <cite>Walden</cite>:
         </p>
         <p>I went to the woods because I wished to live deliberately, to
           front only the essential facts of life, and see if I could not
@@ -191,11 +160,11 @@
           that I had not lived. I did not wish to live what was not life,
           living is so dear; nor did I wish to practise resignation, unless
           it was quite necessary.</p>
-        <p>A second paragraph follows the first after a small breath, close
-          enough that the essay flows, distinct enough that you never lose
-          the seam. End a Markdown line with two spaces and you get a hard
-          line break instead of a new paragraph:<br>like this, with no gap at
-          all.</p>
+        <p>A second paragraph follows the first after a small gap: close
+          enough to keep the text flowing, distinct enough to show where one
+          paragraph ends and the next begins. End a Markdown line with two
+          spaces and you get a hard line break instead of a new
+          paragraph:<br>like this, with no gap at all.</p>
 
         <h2>Emphasis</h2>
         <p>Wrap a word in single asterisks for <em>italic</em>, double for
@@ -229,6 +198,14 @@
         <p>Try selecting any sentence on this page. The selection tint
           comes from the theme, so it stays readable in light, sepia, and
           dark alike.</p>
+        <p><strong>Inline SVG:</strong> a hand-drawn star
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"
+            style="display:inline;vertical-align:-0.15em">
+            <path d="M8 1l2 4.5 5 .6-3.6 3.4.9 4.9L8 12l-4.3 2.4.9-4.9L1 6.1l5-.6z"
+              fill="none" stroke="currentColor" stroke-width="1"></path>
+          </svg>
+          sits inline like a character, sized in the markup rather than
+          stretched to fill the column the way a standalone image would.</p>
 
         <h2>Links</h2>
         <p>A link looks like <a href="#">this: colored, with a quiet
@@ -258,8 +235,8 @@
         </p>
 
         <h2>Blockquotes</h2>
-        <p>Start a line with <code>&gt;</code> and Markdown sets the text
-          apart: larger, italic, with a rule down its left side:</p>
+        <p>Start a line with <code>&gt;</code> and Markdown sets the quote
+          apart, in a quieter color with a rule along its edge:</p>
         <blockquote>
           <p>The details are not the details. They make the design.</p>
           <footer>Charles Eames, <cite>Design Discourse</cite>,
@@ -320,8 +297,8 @@
           <li>Then the spacing</li>
           <li>Then the color</li>
         </ul>
-        <p>A loose list, where each item holds a full paragraph, breathes
-          a little more:</p>
+        <p>A loose list, where each item holds a full paragraph, gets a
+          little more room:</p>
         <ul>
           <li>
             <p>The first item carries a complete thought, written as a
@@ -333,8 +310,8 @@
               that happens to have bullets.</p>
           </li>
         </ul>
-        <p>Indent items and lists nest three levels deep without losing the
-          thread:</p>
+        <p>Indent items and lists nest three levels deep, each level keeping
+          its own indent:</p>
         <ul>
           <li>Level one
             <ul>
@@ -411,7 +388,7 @@
           panel, in a fixed-width typeface:</p>
         <pre tabindex="0" class="shiki shiki-themes github-light github-dark"
           style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e"
-          tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">/* A code block keeps every space exactly where you typed it */</span></span>
+          tabindex="0"><code><span class="line"><span style="--shiki-light:#586069;--shiki-dark:#919DB0">/* A code block keeps every space exactly where you typed it */</span></span>
 <span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">:root</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
 <span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">  --primary-font</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"Source Serif 4"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">serif</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
 <span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">  --code-font</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"Source Code Pro"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">monospace</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
@@ -428,6 +405,7 @@
           beneath them, rows get light ones, and the digits line up in tidy
           columns:</p>
         <table>
+          <caption>Five bodies in the solar system, ordered by distance from the sun</caption>
           <thead>
             <tr>
               <th>Celestial body</th>
@@ -569,16 +547,19 @@
           typeface, keeps a visible border, and shows a clear ring when you
           reach it from the keyboard:</p>
         <form aria-label="Sample newsletter form">
-          <p>
-            <label for="demo-name">Your name</label><br>
-            <input type="text" id="demo-name" name="name"
-              placeholder="Ada Lovelace">
-          </p>
-          <p>
-            <label for="demo-email">Email address</label><br>
-            <input type="email" id="demo-email" name="email"
-              placeholder="ada@example.com">
-          </p>
+          <fieldset>
+            <legend>Your details</legend>
+            <p>
+              <label for="demo-name">Your name</label><br>
+              <input type="text" id="demo-name" name="name"
+                placeholder="Ada Lovelace">
+            </p>
+            <p>
+              <label for="demo-email">Email address</label><br>
+              <input type="email" id="demo-email" name="email" required
+                placeholder="ada@example.com">
+            </p>
+          </fieldset>
           <p>
             <label for="demo-topic">Favorite topic</label><br>
             <select id="demo-topic" name="topic">
@@ -593,12 +574,45 @@
               placeholder="Tell us what you are reading."></textarea>
           </p>
           <p>
+            <label for="demo-attachment">Attach a screenshot</label><br>
+            <input type="file" id="demo-attachment" name="attachment">
+          </p>
+          <p>
+            <label><input type="checkbox" name="updates"> Email me about
+              updates</label>
+          </p>
+          <p>
+            How often?<br>
+            <label><input type="radio" name="frequency" value="weekly">
+              Weekly</label>
+            <label><input type="radio" name="frequency" value="monthly">
+              Monthly</label>
+          </p>
+          <p>
             <button type="button">Subscribe</button>
             <button type="button" disabled>Unavailable</button>
           </p>
         </form>
         <p>Press and hold the Subscribe button; it dips slightly under
-          your finger. The disabled one fades and refuses the cursor.</p>
+          your finger. The disabled one fades and refuses the cursor.
+          Type something that isn't an email address into the email
+          field, then click away: the border only turns to the error
+          color once you've actually interacted with it, not simply
+          because it started out empty.</p>
+
+        <h2>Progress, meter, and dialog</h2>
+        <p>Three more native elements read the same theme colors:</p>
+        <p>
+          <progress value="70" max="100">70%</progress><br>
+          <meter value="0.6">60%</meter>
+        </p>
+        <dialog open aria-label="Sample dialog">
+          <h4>A native dialog</h4>
+          <p>Shown here with the <code>open</code> attribute so you can
+            see its border, padding, and color. A real modal, with a
+            dimmed backdrop behind it, needs <code>.showModal()</code>,
+            which needs JavaScript this zero-JS demo doesn't ship.</p>
+        </dialog>
 
         <h2>Mixed content and hard cases</h2>
         <h3>A heading holding <code>code</code> and <strong>bold</strong></h3>
@@ -667,10 +681,5 @@
         </section>
       </article>
     </main>
-
-
-
-    <a class="back-to-top" href="#top" aria-label="Back to top"
-      title="Back to top">&#8593;</a>
   </body>
 </html>
