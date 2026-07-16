@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Rana
 
 Rana styles plain HTML and Markdown output for calm, long-form reading.
@@ -106,3 +107,7 @@ disclosures instead of animated ones.
 ## License
 
 [MIT](LICENSE).
+=======
+# rana-css
+CSS for calm, long-form reading
+>>>>>>> dbbacd7b33af1fab417b71ed193b1a359c376786
