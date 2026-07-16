@@ -65,6 +65,8 @@
       .hero .tagline {
         font-size: 1.25em;
         margin-block-end: var(--space-2xs);
+        hyphens: none;
+        text-wrap: balance;
       }
 
       .hero .facts {
@@ -115,9 +117,12 @@
       }
 
       .theme-picker fieldset {
-        text-align: center;
         border: none;
         padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-2xs) var(--space-s);
       }
 
       .theme-picker legend {
@@ -128,17 +133,17 @@
       }
 
       .theme-picker label {
-        margin-inline-end: 1rem;
-      }
-
-      .theme-picker input[type="radio"] {
-        margin-inline-end: 0.35rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        white-space: nowrap;
       }
 
       .features {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-        gap: var(--space-m);
+        column-gap: var(--space-m);
+        row-gap: var(--space-xl);
         margin-block-start: var(--space-l);
       }
 
@@ -252,21 +257,16 @@
       <form class="theme-picker" aria-label="Theme preference">
         <fieldset>
           <legend>Try a theme.</legend>
-          <input type="radio" value="auto" name="theme" id="theme-auto"
-            checked>
-          <label for="theme-auto">Auto</label>
-
-          <input type="radio" value="gray" name="theme" id="theme-gray">
-          <label for="theme-gray">Light</label>
-
-          <input type="radio" value="sepia" name="theme" id="theme-sepia">
-          <label for="theme-sepia">Sepia</label>
-
-          <input type="radio" value="mint" name="theme" id="theme-mint">
-          <label for="theme-mint">Mint</label>
-
-          <input type="radio" value="dark" name="theme" id="theme-dark">
-          <label for="theme-dark">Dark</label>
+          <label><input type="radio" value="auto" name="theme" id="theme-auto"
+              checked>Auto</label>
+          <label><input type="radio" value="gray" name="theme"
+              id="theme-gray">Light</label>
+          <label><input type="radio" value="sepia" name="theme"
+              id="theme-sepia">Sepia</label>
+          <label><input type="radio" value="mint" name="theme"
+              id="theme-mint">Mint</label>
+          <label><input type="radio" value="dark" name="theme"
+              id="theme-dark">Dark</label>
         </fieldset>
       </form>
 
